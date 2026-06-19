@@ -1,0 +1,1251 @@
+<!DOCTYPE html>
+<html lang="az">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Alqoritmlər Praktikum — 41 Məsələ</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#0d1117;--panel:#151b24;--panel2:#1b2330;--border:#283242;
+  --ink:#e6edf3;--muted:#8b96a5;--grid:#171e29;
+  --teal:#2dd4bf;--tealdim:#0f3d39;--amber:#f5a623;--amberdim:#3d2f10;
+  --red:#f0716e;--reddim:#3c1d1d;--blue:#60a5fa;--bluedim:#1e3a5f;
+  --purple:#c084fc;--purpledim:#3b1f5e;
+  --disp:'Space Grotesk',system-ui,sans-serif;
+  --body:'Inter',system-ui,sans-serif;
+  --mono:'JetBrains Mono',monospace;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+body{background:var(--bg);color:var(--ink);font-family:var(--body);line-height:1.55;-webkit-font-smoothing:antialiased;
+  background-image:linear-gradient(var(--grid) 1px,transparent 1px),linear-gradient(90deg,var(--grid) 1px,transparent 1px);
+  background-size:28px 28px;display:flex;min-height:100vh}
+/* ---- Sidebar ---- */
+#sidebar{width:268px;flex-shrink:0;background:var(--panel);border-right:1px solid var(--border);height:100vh;overflow-y:auto;position:sticky;top:0}
+.sb-hd{padding:16px 14px 10px;border-bottom:1px solid var(--border)}
+.sb-hd h1{font-family:var(--disp);font-size:14px;font-weight:700;color:var(--teal)}
+.sb-hd p{font-size:11px;color:var(--muted);margin-top:3px}
+.sb-cat{padding:8px 14px 2px;font-family:var(--disp);font-size:10px;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:.1em;margin-top:4px}
+.sb-item{display:flex;align-items:flex-start;gap:9px;padding:7px 14px;cursor:pointer;font-size:12.5px;transition:background .12s;border-left:2px solid transparent;line-height:1.35}
+.sb-item:hover{background:var(--panel2)}
+.sb-item.active{background:var(--panel2);border-left-color:var(--teal);color:var(--teal)}
+.sb-num{min-width:22px;height:22px;border-radius:5px;background:var(--panel2);border:1px solid var(--border);display:flex;align-items:center;justify-content:center;font-family:var(--mono);font-size:10px;font-weight:700;color:var(--muted);flex-shrink:0;margin-top:1px}
+.sb-item.active .sb-num{border-color:var(--teal);color:var(--teal)}
+.sb-txt{color:var(--muted)}
+.sb-item.active .sb-txt{color:var(--teal)}
+/* ---- Main ---- */
+#main{flex:1;padding:18px;overflow-y:auto;min-width:0}
+.card{background:var(--panel);border:1px solid var(--border);border-radius:14px;overflow:hidden;margin-bottom:14px}
+.card-h{padding:10px 14px;border-bottom:1px solid var(--border);display:flex;justify-content:space-between;align-items:center;font-family:var(--disp);font-size:12.5px;color:var(--muted)}
+.card-h b{color:var(--ink);font-weight:500}
+/* ---- Algo def ---- */
+.algo-def-inner{padding:14px 15px}
+.algo-def-inner h2{font-family:var(--disp);font-size:17px;font-weight:700;display:flex;align-items:center;gap:9px;margin-bottom:7px}
+.algo-def-inner h2::before{content:"";width:4px;height:17px;background:var(--teal);border-radius:2px;flex-shrink:0}
+.algo-def-inner .question{background:var(--panel2);border:1px solid var(--border);border-left:3px solid var(--amber);border-radius:9px;padding:10px 13px;font-size:13.5px;margin-bottom:10px;color:var(--ink)}
+.algo-def-inner .definition{font-size:13.5px;color:var(--muted);margin-bottom:10px}
+.badges{display:flex;gap:7px;flex-wrap:wrap}
+.badge{font-family:var(--mono);font-size:11px;padding:3px 9px;border-radius:20px;border:1px solid var(--border);background:var(--panel2);color:var(--muted)}
+.badge.t{border-color:var(--teal);color:var(--teal)}
+.badge.a{border-color:var(--amber);color:var(--amber)}
+.badge.r{border-color:var(--red);color:var(--red)}
+/* ---- Stage ---- */
+.stage{display:grid;grid-template-columns:1.45fr 1fr;gap:14px;margin-bottom:14px}
+@media(max-width:860px){.stage{grid-template-columns:1fr}}
+/* ---- Bar chart ---- */
+.bar-wrap{padding:14px 10px 6px;background:radial-gradient(circle at 30% 20%,#121a26,#0d1117 70%)}
+.bar-group{display:flex;align-items:flex-end;justify-content:center;gap:3px;height:210px}
+.bar-col{display:flex;flex-direction:column;align-items:center;gap:3px;flex:1;max-width:64px}
+.bar-val{font-family:var(--mono);font-size:10.5px;color:var(--muted);white-space:nowrap}
+.bar-rect{width:100%;border-radius:4px 4px 0 0;background:#3a4658;transition:height .22s,background .18s;min-height:6px}
+.bar-rect.cmp{background:var(--amber)}
+.bar-rect.sorted{background:var(--teal)}
+.bar-rect.minv{background:var(--red)}
+.bar-rect.pivot{background:var(--purple)}
+.bar-rect.keyv{background:var(--blue)}
+.bar-rect.lhalf{background:#3b5bc0}
+.bar-rect.rhalf{background:#7c3aed}
+.bar-rect.swp{background:var(--amber);filter:brightness(1.25)}
+.bar-idx{font-family:var(--mono);font-size:9px;color:#4a5568}
+/* ---- Compare ---- */
+.cmp-wrap{display:grid;grid-template-columns:1fr 1fr;gap:2px;background:var(--panel2)}
+.cmp-side{background:var(--panel)}
+.cmp-label{text-align:center;padding:6px 0 0;font-family:var(--disp);font-size:11px;font-weight:700;color:var(--muted)}
+.cmp-stats{display:flex;gap:6px;justify-content:center;padding:6px 0 10px;flex-wrap:wrap}
+.cmp-stat{font-family:var(--mono);font-size:11px;padding:3px 9px;border-radius:7px;background:var(--panel2);border:1px solid var(--border);color:var(--muted)}
+.cmp-stat.better{border-color:var(--teal);color:var(--teal)}
+/* ---- Graph SVG ---- */
+svg.gviz{display:block;width:100%;height:auto;background:radial-gradient(circle at 30% 20%,#121a26,#0d1117 70%)}
+.gedge{stroke:#3f4b5b;stroke-width:2.5;transition:stroke .3s,stroke-width .3s}
+.gedge.tree{stroke:var(--teal);stroke-width:5}
+.gedge.consider{stroke:var(--amber);stroke-width:5;stroke-dasharray:7 5;animation:dash 1s linear infinite}
+.gedge.reject{stroke:var(--red);stroke-width:4;stroke-dasharray:3 5;opacity:.85}
+@keyframes dash{to{stroke-dashoffset:-24}}
+@media(prefers-reduced-motion:reduce){.gedge.consider{animation:none}}
+.wbadge rect{rx:5}
+.wbadge text{font-family:var(--mono);font-size:12px;font-weight:500;fill:#9aa6b6;text-anchor:middle;dominant-baseline:central}
+.wbadge.hot text{fill:var(--amber)}
+.wbadge.on text{fill:var(--teal)}
+.gnode circle{fill:#222b39;stroke:#3a4658;stroke-width:2.5;transition:.3s}
+.gnode text.lbl{font-family:var(--disp);font-weight:700;font-size:16px;fill:var(--ink);text-anchor:middle;dominant-baseline:central}
+.gnode text.dlbl{font-family:var(--mono);font-size:11px;font-weight:700;fill:var(--amber);text-anchor:middle}
+.gnode.in circle{fill:var(--tealdim);stroke:var(--teal);stroke-width:3}
+.gnode.cur circle{fill:var(--amberdim);stroke:var(--amber);stroke-width:3.5}
+/* ---- Controls ---- */
+.controls{display:flex;gap:7px;padding:11px 14px;border-top:1px solid var(--border);align-items:center;flex-wrap:wrap}
+button.ctl{font-family:var(--disp);font-size:12.5px;font-weight:500;cursor:pointer;background:var(--panel2);border:1px solid var(--border);color:var(--ink);padding:8px 13px;border-radius:8px;transition:.14s}
+button.ctl:hover:not(:disabled){border-color:var(--teal);color:var(--teal)}
+button.ctl:disabled{opacity:.32;cursor:not-allowed}
+button.ctl.primary{background:var(--teal);color:#08221f;border-color:var(--teal);font-weight:700}
+button.ctl.primary:hover{filter:brightness(1.08);color:#08221f}
+.step-ctr{margin-left:auto;font-family:var(--mono);font-size:11.5px;color:var(--muted)}
+.prog-bar{height:3px;background:var(--panel2)}
+.prog-bar i{display:block;height:100%;background:var(--teal);transition:width .3s}
+/* ---- Side panel ---- */
+.desc-panel{padding:13px 14px;min-height:90px;font-size:13.5px}
+.step-title{font-family:var(--disp);font-weight:700;color:var(--teal);font-size:11.5px;text-transform:uppercase;letter-spacing:.06em;display:block;margin-bottom:6px}
+.desc-panel b{color:var(--amber);font-weight:600}
+.state-panel{padding:11px 14px;border-top:1px solid var(--border);font-family:var(--mono);font-size:12px}
+.slbl{color:var(--muted);font-family:var(--disp);font-size:10px;letter-spacing:.06em;text-transform:uppercase;margin-bottom:6px;margin-top:10px}
+.slbl:first-child{margin-top:0}
+.srow{display:flex;justify-content:space-between;align-items:center;padding:4px 8px;border-radius:6px;margin-bottom:2px;background:var(--panel2)}
+.srow.pick{background:var(--amberdim);color:var(--amber)}
+.srow.done{background:var(--tealdim);color:var(--teal)}
+.srow.rej{color:var(--red);text-decoration:line-through;opacity:.7}
+.sbadge{font-size:10px;padding:1px 6px;border-radius:15px;border:1px solid currentColor;font-family:var(--disp)}
+.dtbl{width:100%;border-collapse:collapse}
+.dtbl th,.dtbl td{padding:4px 7px;text-align:center;border-bottom:1px solid var(--border);font-size:11.5px}
+.dtbl th{color:var(--muted);font-family:var(--disp);font-size:10px}
+.dtbl tr.cur td{color:var(--amber);font-weight:700}
+.dtbl tr.done td{color:var(--teal)}
+/* ---- Complexity ---- */
+.cx-view{padding:14px 15px}
+.cx-code{background:#0a0e14;border:1px solid var(--border);border-radius:10px;padding:13px 15px;font-family:var(--mono);font-size:12.5px;line-height:1.7;color:#cdd6e0;margin-bottom:12px;overflow-x:auto}
+.cx-code .hl{background:rgba(245,166,35,.15);color:var(--amber);display:block;border-radius:3px;padding:0 3px;margin:0 -3px}
+.cx-math{background:var(--panel2);border:1px solid var(--border);border-radius:10px;padding:13px 15px;font-family:var(--mono);font-size:13px;line-height:1.9;color:#cdd6e0;margin-bottom:12px}
+.cx-math .hl{color:var(--amber)}
+.cx-math .res{color:var(--teal);font-weight:700;font-size:14px}
+.cx-result{background:linear-gradient(135deg,var(--tealdim),var(--panel2));border:1px solid var(--teal);border-radius:10px;padding:13px 15px;text-align:center}
+.cx-result .big{font-family:var(--mono);font-size:22px;font-weight:700;color:var(--teal)}
+.cx-result .sub{font-size:13px;color:var(--muted);margin-top:5px}
+/* ---- Code ---- */
+.code-tabs{display:flex;gap:6px;padding:10px 14px 0;flex-wrap:wrap}
+.code-tab{font-family:var(--mono);font-size:11.5px;cursor:pointer;background:var(--panel2);border:1px solid var(--border);color:var(--muted);padding:5px 11px;border-radius:7px;transition:.12s}
+.code-tab.active{color:var(--teal);border-color:var(--teal)}
+pre.code{background:#0a0e14;padding:15px;font-family:var(--mono);font-size:12.5px;line-height:1.65;color:#cdd6e0;overflow:auto;margin:0;border-top:1px solid var(--border)}
+/* ---- Merge tree visual ---- */
+.merge-info{padding:6px 10px;background:var(--panel2);border-top:1px solid var(--border);font-family:var(--mono);font-size:11.5px;color:var(--muted);text-align:center;min-height:28px}
+/* ---- Code line highlight ---- */
+.code-line{display:block;border-radius:3px;padding:0 2px;margin:0 -2px;transition:background .2s}
+.code-line.active-line{background:rgba(45,212,191,.18);border-left:2px solid var(--teal);padding-left:6px;color:#fff}
+/* ---- Bilingual question ---- */
+.q-az{font-size:13.5px;color:var(--ink);margin-bottom:4px}
+.q-en{font-size:12px;color:var(--muted);font-style:italic}
+/* ---- Mobile hamburger ---- */
+#menu-toggle{display:none;position:fixed;top:12px;left:12px;z-index:200;background:var(--panel);border:1px solid var(--border);border-radius:9px;width:40px;height:40px;align-items:center;justify-content:center;cursor:pointer;flex-direction:column;gap:5px;padding:10px}
+#menu-toggle span{display:block;height:2px;background:var(--ink);border-radius:2px;width:18px;transition:.2s}
+#sidebar-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.55);z-index:99;backdrop-filter:blur(2px)}
+/* ---- Mobile layout ---- */
+@media(max-width:720px){
+  #menu-toggle{display:flex}
+  body{flex-direction:column}
+  #sidebar{position:fixed;top:0;left:-280px;height:100vh;width:268px;z-index:100;transition:left .22s ease;box-shadow:4px 0 24px #000a}
+  #sidebar.open{left:0}
+  #sidebar-overlay.open{display:block}
+  #main{padding:56px 10px 10px;width:100%}
+  .stage{grid-template-columns:1fr!important;gap:10px}
+  .controls{gap:5px;padding:8px 10px}
+  button.ctl{font-size:11.5px;padding:7px 10px}
+  .algo-def-inner h2{font-size:15px}
+  .card-h{font-size:11.5px}
+  pre.code{font-size:11.5px}
+  .bar-group{height:170px!important}
+  .bar-val{font-size:9px}
+  .step-ctr{font-size:10.5px}
+  #prob-list{padding-bottom:40px}
+}
+@media(max-width:480px){
+  button.ctl{font-size:10.5px;padding:6px 8px}
+  .algo-def-inner h2{font-size:13.5px}
+  .badges{gap:5px}
+  .badge{font-size:10px;padding:2px 7px}
+}
+</style>
+</head>
+<body>
+<div id="menu-toggle" onclick="toggleSidebar()" aria-label="Menyu">
+  <span></span><span></span><span></span>
+</div>
+<div id="sidebar-overlay" onclick="toggleSidebar()"></div>
+<aside id="sidebar">
+  <div class="sb-hd">
+    <h1>Alqoritmlər Praktikum</h1>
+    <p>41 məsələ · addım-addım vizuallaşdırma</p>
+  </div>
+  <div id="prob-list"></div>
+</aside>
+<main id="main">
+  <div class="card" id="def-card">
+    <div class="card-h"><b id="def-title">Alqoritm tərifi</b></div>
+    <div class="algo-def-inner" id="def-body"></div>
+  </div>
+  <div class="stage">
+    <div class="card">
+      <div class="card-h"><b id="viz-title">Vizuallaşdırma</b><span id="viz-sub"></span></div>
+      <div id="viz-area"></div>
+      <div class="merge-info" id="merge-info" style="display:none"></div>
+      <div class="prog-bar"><i id="prog" style="width:0%"></i></div>
+      <div class="controls">
+        <button class="ctl" id="btn-reset">⟲ Sıfırla</button>
+        <button class="ctl" id="btn-prev">‹ Geri</button>
+        <button class="ctl primary" id="btn-next">İrəli ›</button>
+        <button class="ctl" id="btn-play">▶ Avtomatik</button>
+        <span class="step-ctr" id="step-ctr">0 / 0</span>
+      </div>
+    </div>
+    <div class="card">
+      <div class="card-h"><b>Bu addımda nə baş verir</b></div>
+      <div class="desc-panel" id="desc-panel"></div>
+      <div class="state-panel" id="state-panel"></div>
+    </div>
+  </div>
+  <div class="card">
+    <div class="card-h"><b>Python kodu</b></div>
+    <div class="code-tabs" id="code-tabs"></div>
+    <pre class="code" id="code-block"></pre>
+  </div>
+</main>
+
+<script>
+// =====================================================================
+// ALGORITHM INFO
+// =====================================================================
+const AINFO = {
+bubble:{name:'Qabarcıq Sıralama (Bubble Sort)',
+  def:'Qonşu elementləri müqayisə edərək böyük olanı sona doğru "qabarcıq kimi" köçürür. Hər keçid (pass) sonunda ən böyük element öz yerinə düşür. Sadə, amma böyük massivilərdə yavaşdır.',
+  t:'O(n²)',sp:'O(1)',best:'O(n)',
+  code:{py:`def bubble_sort(arr):
+    n = len(arr)
+    for i in range(n - 1):           # n-1 keçid
+        for j in range(n - i - 1):   # sona doğru azalır
+            if arr[j] > arr[j+1]:
+                arr[j], arr[j+1] = arr[j+1], arr[j]
+    return arr`}},
+
+insertion:{name:'Yerinəqoyma Sıralama (Insertion Sort)',
+  def:'Kartları sıraladığınız kimi işləyir. Sıralanmamış hissədən bir element (key) götürür, sıralanmış hissədə onun düzgün yerinə qoyur. Kiçik və demək olar ki sıralanmış massivilərdə çox effektivdir.',
+  t:'O(n²)',sp:'O(1)',best:'O(n)',
+  code:{py:`def insertion_sort(arr):
+    for i in range(1, len(arr)):
+        key = arr[i]        # götürülən element
+        j = i - 1
+        while j >= 0 and arr[j] > key:
+            arr[j+1] = arr[j]   # bir mövqe sağa sür
+            j -= 1
+        arr[j+1] = key      # düzgün yerə qoy
+    return arr`}},
+
+selection:{name:'Seçim Sıralama (Selection Sort)',
+  def:'Hər addımda sıralanmamış hissənin minimumunu tapır və onu sıralanmamış hissənin əvvəlinə yerləşdirir. Yerdəyişmə sayı minimumdur (n-1), amma müqayisə sayı həmişə O(n²)-dir.',
+  t:'O(n²)',sp:'O(1)',best:'O(n²)',
+  code:{py:`def selection_sort(arr):
+    n = len(arr)
+    for i in range(n - 1):
+        min_idx = i
+        for j in range(i + 1, n):
+            if arr[j] < arr[min_idx]:
+                min_idx = j          # yeni minimum
+        arr[i], arr[min_idx] = arr[min_idx], arr[i]
+    return arr`}},
+
+shell:{name:'Şell Sıralama (Shell Sort)',
+  def:'Insertion Sort-un təkmilləşdirilmiş versiyasıdır. Uzaq məsafəli elementləri müqayisə edərək başlayır (gap = n/2), sonra gap azaldıqca adi Insertion Sort-a çevrilir. Orta ölçülü massivilərdə çox sürətlidir.',
+  t:'O(n log²n)',sp:'O(1)',best:'O(n log n)',
+  code:{py:`def shell_sort(arr):
+    n = len(arr)
+    gap = n // 2
+    while gap > 0:
+        for i in range(gap, n):
+            temp = arr[i]
+            j = i
+            while j >= gap and arr[j - gap] > temp:
+                arr[j] = arr[j - gap]
+                j -= gap
+            arr[j] = temp
+        gap //= 2           # gap azaldılır
+    return arr`}},
+
+quick:{name:'Sürətli Sıralama (QuickSort)',
+  def:'"Parçala və idarə et" (Divide & Conquer) prinsipinə əsaslanır. Pivot seçilir, massiv pivotdan kiçik/böyük olanlara bölünür (partition), hər hissə rekursiv sıralanır. Orta halda O(n log n) ən sürətli sıralama alqoritmlərindən biridir.',
+  t:'O(n log n)',sp:'O(log n)',best:'O(n log n)',
+  code:{py:`def quicksort(arr, low=0, high=None):
+    if high is None:
+        high = len(arr) - 1
+    if low < high:
+        p = partition(arr, low, high)
+        quicksort(arr, low, p - 1)
+        quicksort(arr, p + 1, high)
+
+def partition(arr, low, high):
+    pivot = arr[high]    # son element — pivot
+    i = low - 1
+    for j in range(low, high):
+        if arr[j] <= pivot:
+            i += 1
+            arr[i], arr[j] = arr[j], arr[i]
+    arr[i+1], arr[high] = arr[high], arr[i+1]
+    return i + 1`}},
+
+merge:{name:'Birləşdirmə Sıralama (Merge Sort)',
+  def:'Massivi yarıya bölür, hər yarını rekursiv sıralayır, sonra iki sıralanmış yarını birləşdirir. Həmişə O(n log n) vaxt tələb edir — stabil sıralamadır. Əlavə O(n) yaddaş lazımdır.',
+  t:'O(n log n)',sp:'O(n)',best:'O(n log n)',
+  code:{py:`def merge_sort(arr):
+    if len(arr) <= 1:
+        return arr
+    mid = len(arr) // 2
+    left  = merge_sort(arr[:mid])
+    right = merge_sort(arr[mid:])
+    return merge(left, right)
+
+def merge(left, right):
+    result, i, j = [], 0, 0
+    while i < len(left) and j < len(right):
+        if left[i] <= right[j]:
+            result.append(left[i]); i += 1
+        else:
+            result.append(right[j]); j += 1
+    return result + left[i:] + right[j:]`}},
+
+prim:{name:'Prim Alqoritmi — Minimal Örtən Ağac (MST)',
+  def:'Bir başlanğıc təpəsindən başlayaraq MST qurur. Hər addımda ağacdakı təpələrdən çölə çıxan ən kiçik çəkili kənar seçilir. Prioritet növbə (min-heap) istifadə edilir. Sıx qraflarda Kruskal-dan daha effektivdir.',
+  t:'O(E log V)',sp:'O(V+E)',best:'O(E log V)',
+  code:{py:`import heapq
+
+def prim(graph, start=0):
+    n = len(graph)
+    visited = [False] * n
+    visited[start] = True
+    # frontier: (ceki, haradan, hara)
+    heap = [(w, start, v) for v,w in graph[start]]
+    heapq.heapify(heap)
+    mst, total = [], 0
+    while heap and sum(visited) < n:
+        w, u, v = heapq.heappop(heap)
+        if visited[v]: continue
+        visited[v] = True
+        mst.append((u, v, w)); total += w
+        for nv, nw in graph[v]:
+            if not visited[nv]:
+                heapq.heappush(heap, (nw, v, nv))
+    return mst, total`}},
+
+kruskal:{name:'Kruskal Alqoritmi — Minimal Örtən Ağac (MST)',
+  def:'Bütün kənarları çəkiyə görə artan sıraya düzür, sonra hər birini nəzərdən keçirir: dövrə yaratmırsa qəbul edir (Union-Find ilə yoxlayır). Seyrək qraflarda Prim-dən daha effektivdir.',
+  t:'O(E log E)',sp:'O(V)',best:'O(E log E)',
+  code:{py:`def find(parent, x):       # Union-Find: kök tap
+    while parent[x] != x:
+        parent[x] = parent[parent[x]]
+        x = parent[x]
+    return x
+
+def kruskal(vertices, edges):  # edges: (w, u, v)
+    parent = {v: v for v in vertices}
+    mst, total = [], 0
+    for w, u, v in sorted(edges):
+        ru, rv = find(parent, u), find(parent, v)
+        if ru != rv:               # dövrə yoxdur
+            parent[ru] = rv
+            mst.append((u, v, w)); total += w
+    return mst, total`}},
+
+dijkstra:{name:'Deykstra Alqoritmi — Ən Qısa Yol',
+  def:'Bir mənbə təpəsindən bütün digər təpələrə olan ən qısa yolları tapır. Hər addımda sıralanmamış təpələr arasından ən qısa məsafəlisi seçilir (greedy), onun qonşuları üçün məsafələr yenilənir (relaxation). Mənfi çəkilərlə işləmir.',
+  t:'O(E log V)',sp:'O(V)',best:'O(E log V)',
+  code:{py:`import heapq
+
+def dijkstra(graph, source):
+    dist = {v: float('inf') for v in graph}
+    dist[source] = 0
+    heap = [(0, source)]
+    while heap:
+        d, u = heapq.heappop(heap)
+        if d > dist[u]: continue       # köhnə giriş
+        for v, w in graph[u]:
+            if dist[u] + w < dist[v]:  # relaxation
+                dist[v] = dist[u] + w
+                heapq.heappush(heap, (dist[v], v))
+    return dist`}},
+
+complexity:{name:'Asimptotik Mürəkkəblik Analizi (Big-O)',
+  def:'Proqramın icrası zamanı əməliyyatların sayını n-nin funksiyası kimi ifadə edirik. Big-O notasiyası yalnız ən sürətli artan termini saxlayır, sabit çarpanları atır. O(1)<O(log n)<O(n)<O(n log n)<O(n²)<O(n³)<O(2ⁿ)',
+  t:'—',sp:'—',best:'—',
+  code:{py:`# Big-O xülasəsi
+O(1)       — sabit: dəyişmir
+O(log n)   — loqarifmik: ikiyə bölünür hər dəfə
+O(n)       — xətti: bir dəfə keçir
+O(n log n) — birləşdirmə: n*log
+O(n²)      — kvadratik: iç-içə iki dövr
+O(n³)      — kubik: üç daxili dövr
+O(2ⁿ)      — eksponensial: rekursiv dallanma`}}
+};
+
+// =====================================================================
+// PROBLEM DEFINITIONS
+// =====================================================================
+const PROBLEMS = [
+  // ------ SORTING ------
+  {id:1,cat:'Sıralama',type:'sort',algo:'bubble',data:[88,16,3,22,4,39,1,7,15],
+   title:'Qabarcıq Sıralama',
+   q:'Verilmiş ardıcıllığı Qabarcıq alqoritmi ilə nizamla: 88  16  3  22  4  39  1  7  15',
+   qEN:'Sort the given sequence using Bubble Sort: 88  16  3  22  4  39  1  7  15'},
+  {id:2,cat:'Sıralama',type:'sort',algo:'insertion',data:[31,47,62,91,8,16,11,9],
+   title:'Yerinəqoyma Sıralama',
+   q:'Verilmiş ardıcıllığı Yerinəqoyma alqoritmi ilə nizamla: 31  47  62  91  8  16  11  9',
+   qEN:'Sort the given sequence using Insertion Sort: 31  47  62  91  8  16  11  9'},
+  {id:3,cat:'Sıralama',type:'sort',algo:'selection',data:[77,11,10,91,22,31,62,7],
+   title:'Seçim Sıralama',
+   q:'Verilmiş ardıcıllığı Seçim alqoritmi ilə nizamla: 77  11  10  91  22  31  62  7',
+   qEN:'Sort the given sequence using Selection Sort: 77  11  10  91  22  31  62  7'},
+  {id:4,cat:'Sıralama',type:'sort',algo:'shell',data:[33,31,12,26,14,3,62,1,28,7],
+   title:'Şell Sıralama',
+   q:'Verilmiş ardıcıllığı Şell alqoritmi ilə nizamla: 33  31  12  26  14  3  62  1  28  7',
+   qEN:'Sort the given sequence using Shell Sort: 33  31  12  26  14  3  62  1  28  7'},
+  {id:5,cat:'Sıralama',type:'sort',algo:'quick',data:[12,67,16,38,62,56,49,27,17,9],
+   title:'QuickSort',
+   q:'Verilmiş ardıcıllığı QuickSort alqoritmi ilə nizamla: 12  67  16  38  62  56  49  27  17  9',
+   qEN:'Sort the given sequence using QuickSort: 12  67  16  38  62  56  49  27  17  9'},
+  // ------ GRAPH ------
+  {id:6,cat:'Qraf',type:'graph',algo:'prim',
+   edges:[[1,2,4],[1,3,7],[1,5,11],[2,4,12],[2,5,5],[3,4,31],[3,5,11],[4,5,22]],
+   title:'Prim Alqoritmi (Məsələ 6)',
+   q:'Verilmiş çəkili qrafa Prim alqoritmini tətbiq edin. (matris: 0 4 7 0 11 / 0 0 12 5 / 0 31 11 / 0 22 / 0)',
+   qEN:'Apply Prim\'s algorithm to find the MST of the given weighted graph.'},
+  {id:7,cat:'Qraf',type:'graph',algo:'prim',
+   edges:[[1,2,5],[1,3,8],[1,5,4],[2,3,1],[2,4,9],[2,5,2],[3,4,33],[4,5,7]],
+   title:'Prim Alqoritmi (Məsələ 7)',
+   q:'Verilmiş çəkili qrafa Prim alqoritmini tətbiq edin. (matris: 0 5 8 0 4 / 0 1 9 2 / 0 33 0 / 0 7 / 0)',
+   qEN:'Apply Prim\'s algorithm to find the MST of the given weighted graph.'},
+  {id:8,cat:'Qraf',type:'graph',algo:'dijkstra',
+   edges:[[1,2,6],[1,3,3],[1,4,1],[2,3,24],[2,4,5],[2,5,9],[3,4,11],[3,5,22]],
+   title:'Deykstra (Məsələ 8)',
+   q:'Verilmiş çəkili qrafın 1-ci təpəsinə Deykstra alqoritmini tətbiq edin.',
+   qEN:'Apply Dijkstra\'s algorithm from vertex 1 to find shortest paths to all other vertices.'},
+  {id:9,cat:'Qraf',type:'graph',algo:'kruskal',
+   edges:[[1,2,3],[1,3,5],[1,4,1],[2,3,12],[2,4,11],[2,5,8],[3,5,33],[4,5,19]],
+   title:'Kruskal (Məsələ 9)',
+   q:'Verilmiş çəkili qrafa Kruskal alqoritmini tətbiq edin.',
+   qEN:'Apply Kruskal\'s algorithm to find the Minimum Spanning Tree of the given graph.'},
+  // ------ COMPARISON ------
+  {id:10,cat:'Müqayisə',type:'compare',alg1:'bubble',alg2:'insertion',metric:'ops',data:[21,17,4,69,67,42,12],
+   title:'Bubble vs Yerinəqoyma (əməliyyat sayı)',
+   q:'Bubble və Yerinəqoyma metodlarını əməliyyatların sayına görə müqayisə et: 21  17  4  69  67  42  12',
+   qEN:'Compare Bubble Sort and Insertion Sort by number of comparisons: 21  17  4  69  67  42  12'},
+  // ------ SORTING 11-14 ------
+  {id:11,cat:'Sıralama',type:'sort',algo:'merge',data:[47,16,41,22,4,12,1,7,22],
+   title:'Merge Sort (Məsələ 11)',
+   q:'Merge alqoritmi ilə nizamla: 47  16  41  22  4  12  1  7  22',
+   qEN:'Sort using Merge Sort: 47  16  41  22  4  12  1  7  22'},
+  {id:12,cat:'Sıralama',type:'sort',algo:'insertion',data:[81,47,62,91,8,16,11,9],
+   title:'Yerinəqoyma (Məsələ 12)',
+   q:'Yerinəqoyma alqoritmi ilə nizamla: 81  47  62  91  8  16  11  9',
+   qEN:'Sort using Insertion Sort: 81  47  62  91  8  16  11  9'},
+  {id:13,cat:'Sıralama',type:'sort',algo:'selection',data:[96,31,12,26,14,3,62,1,28,7],
+   title:'Seçim (Məsələ 13)',
+   q:'Seçim alqoritmi ilə nizamla: 96  31  12  26  14  3  62  1  28  7',
+   qEN:'Sort using Selection Sort: 96  31  12  26  14  3  62  1  28  7'},
+  {id:14,cat:'Sıralama',type:'sort',algo:'merge',data:[98,67,16,38,62,56,49,27,17,8],
+   title:'Merge Sort (Məsələ 14)',
+   q:'Merge alqoritmi ilə nizamla: 98  67  16  38  62  56  49  27  17  8',
+   qEN:'Sort using Merge Sort: 98  67  16  38  62  56  49  27  17  8'},
+  // ------ GRAPH 15-17 ------
+  {id:15,cat:'Qraf',type:'graph',algo:'prim',
+   edges:[[1,2,3],[1,3,2],[1,4,6],[1,5,4],[2,3,12],[2,4,9],[3,4,8],[3,5,9],[4,5,22]],
+   title:'Prim (Məsələ 15)',
+   q:'Verilmiş çəkili qrafa Prim alqoritmini tətbiq edin. (matris: 0 3 2 6 4 / 0 12 9 0 / 0 8 9 / 0 22 / 0)',
+   qEN:'Apply Prim\'s algorithm to the given weighted graph (matrix: 0 3 2 6 4 / 0 12 9 0 / 0 8 9 / 0 22 / 0)'},
+  {id:16,cat:'Qraf',type:'graph',algo:'dijkstra',
+   edges:[[1,2,7],[1,3,5],[1,4,1],[2,3,12],[2,5,4],[3,4,21],[3,5,15],[4,5,6]],
+   title:'Deykstra (Məsələ 16)',
+   q:'Verilmiş çəkili qrafın 1-ci təpəsinə Deykstra alqoritmini tətbiq edin.',
+   qEN:'Apply Dijkstra\'s shortest path algorithm starting from vertex 1.'},
+  {id:17,cat:'Qraf',type:'graph',algo:'kruskal',
+   edges:[[1,2,4],[1,3,7],[1,5,5],[2,3,8],[2,4,12],[3,4,16],[3,5,21],[4,5,11]],
+   title:'Kruskal (Məsələ 17)',
+   q:'Verilmiş çəkili qrafa Kruskal alqoritmini tətbiq edin.',
+   qEN:'Apply Kruskal\'s algorithm to find the MST of the given weighted graph.'},
+  // ------ SORTING 18-20 ------
+  {id:18,cat:'Sıralama',type:'sort',algo:'merge',data:[47,16,41,22,4,12,1,7,19],
+   title:'Merge Sort (Məsələ 18)',
+   q:'Merge alqoritmi ilə nizamla: 47  16  41  22  4  12  1  7  19',
+   qEN:'Sort using Merge Sort: 47  16  41  22  4  12  1  7  19'},
+  {id:19,cat:'Sıralama',type:'sort',algo:'shell',data:[47,16,41,22,4,12,1,7,21],
+   title:'Şell Sıralama (Məsələ 19)',
+   q:'Şell alqoritmi ilə nizamla: 47  16  41  22  4  12  1  7  21',
+   qEN:'Sort using Shell Sort: 47  16  41  22  4  12  1  7  21'},
+  {id:20,cat:'Sıralama',type:'sort',algo:'selection',data:[98,67,16,38,62,56,49,27,17,8],
+   title:'Seçim (Məsələ 20)',
+   q:'Seçim alqoritmi ilə nizamla: 98  67  16  38  62  56  49  27  17  8',
+   qEN:'Sort using Selection Sort: 98  67  16  38  62  56  49  27  17  8'},
+  // ------ GRAPH 21 ------
+  {id:21,cat:'Qraf',type:'graph',algo:'prim',
+   edges:[[1,2,11],[1,3,23],[1,5,7],[2,3,17],[2,4,8],[2,5,23],[3,4,22],[4,5,43]],
+   title:'Prim (Məsələ 21)',
+   q:'Verilmiş çəkili qrafa Prim alqoritmini tətbiq edin. (matris: 0 11 23 0 7 / 0 17 8 23 / 0 22 0 / 0 43 / 0)',
+   qEN:'Apply Prim\'s MST algorithm to the weighted graph.'},
+  // ------ COMPARISON 22 ------
+  {id:22,cat:'Müqayisə',type:'compare',alg1:'bubble',alg2:'selection',metric:'ops',data:[21,17,4,69,67,42,12,97],
+   title:'Bubble vs Seçim (əməliyyat sayı)',
+   q:'Bubble və Seçim metodlarını əməliyyatların sayına görə müqayisə et: 21  17  4  69  67  42  12  97',
+   qEN:'Compare Bubble Sort vs Selection Sort by comparison count: 21  17  4  69  67  42  12  97'},
+  // ------ SORTING 23-25 ------
+  {id:23,cat:'Sıralama',type:'sort',algo:'selection',data:[96,31,12,26,14,3,62,1,28,7],
+   title:'Seçim (Məsələ 23)',
+   q:'Seçim alqoritmi ilə nizamla: 96  31  12  26  14  3  62  1  28  7',
+   qEN:'Sort using Selection Sort: 96  31  12  26  14  3  62  1  28  7'},
+  {id:24,cat:'Sıralama',type:'sort',algo:'insertion',data:[88,67,16,38,62,56,49,27,17,8],
+   title:'Yerinəqoyma (Məsələ 24)',
+   q:'Yerinəqoyma alqoritmi ilə nizamla: 88  67  16  38  62  56  49  27  17  8',
+   qEN:'Sort using Insertion Sort: 88  67  16  38  62  56  49  27  17  8'},
+  {id:25,cat:'Sıralama',type:'sort',algo:'quick',data:[81,47,62,91,8,16,11,9],
+   title:'QuickSort (Məsələ 25)',
+   q:'QuickSort alqoritmi ilə nizamla: 81  47  62  91  8  16  11  9',
+   qEN:'Sort using QuickSort: 81  47  62  91  8  16  11  9'},
+  // ------ COMPARISON 26 ------
+  {id:26,cat:'Müqayisə',type:'compare',alg1:'bubble',alg2:'selection',metric:'ops',data:[21,17,4,69,67,42,12,97,68],
+   title:'Bubble vs Seçim (Məsələ 26)',
+   q:'Bubble və Seçim metodlarını əməliyyatların sayına görə müqayisə et: 21  17  4  69  67  42  12  97  68',
+   qEN:'Compare Bubble Sort vs Selection Sort by comparison count: 21  17  4  69  67  42  12  97  68'},
+  // ------ SORTING 27-30 ------
+  {id:27,cat:'Sıralama',type:'sort',algo:'merge',data:[81,47,62,91,8,16,11,9],
+   title:'Merge Sort (Məsələ 27)',
+   q:'Merge alqoritmi ilə nizamla: 81  47  62  91  8  16  11  9',
+   qEN:'Sort using Merge Sort: 81  47  62  91  8  16  11  9'},
+  {id:28,cat:'Sıralama',type:'sort',algo:'quick',data:[98,67,16,38,62,56,49,27,17,8],
+   title:'QuickSort (Məsələ 28)',
+   q:'QuickSort alqoritmi ilə nizamla: 98  67  16  38  62  56  49  27  17  8',
+   qEN:'Sort using QuickSort: 98  67  16  38  62  56  49  27  17  8'},
+  {id:29,cat:'Sıralama',type:'sort',algo:'selection',data:[56,44,10,91,22,31,62,7],
+   title:'Seçim (Məsələ 29)',
+   q:'Seçim alqoritmi ilə nizamla: 56  44  10  91  22  31  62  7',
+   qEN:'Sort using Selection Sort: 56  44  10  91  22  31  62  7'},
+  {id:30,cat:'Sıralama',type:'sort',algo:'quick',data:[98,67,16,38,62,56,49,27,17,8],
+   title:'QuickSort (Məsələ 30)',
+   q:'QuickSort alqoritmi ilə nizamla: 98  67  16  38  62  56  49  27  17  8',
+   qEN:'Sort using QuickSort: 98  67  16  38  62  56  49  27  17  8'},
+  // ------ COMPARISON 31 ------
+  {id:31,cat:'Müqayisə',type:'compare',alg1:'bubble',alg2:'insertion',metric:'swaps',data:[21,17,4,69,67,42,12,97],
+   title:'Bubble vs Yerinəqoyma (yerdəyişmə sayı)',
+   q:'Bubble və Yerinəqoyma metodlarını yerdəyişmələrin sayına görə müqayisə et: 21  17  4  69  67  42  12  97',
+   qEN:'Compare Bubble Sort vs Insertion Sort by number of swaps: 21  17  4  69  67  42  12  97'},
+  // ------ SORTING 32 ------
+  {id:32,cat:'Sıralama',type:'sort',algo:'selection',data:[56,44,10,91,22,31,62,7,3,8],
+   title:'Seçim (Məsələ 32)',
+   q:'Seçim alqoritmi ilə nizamla: 56  44  10  91  22  31  62  7  3  8',
+   qEN:'Sort using Selection Sort: 56  44  10  91  22  31  62  7  3  8'},
+  // ------ COMPARISON 33 ------
+  {id:33,cat:'Müqayisə',type:'compare',alg1:'bubble',alg2:'insertion',metric:'swaps',data:[21,17,4,69,67,42,12],
+   title:'Bubble vs Yerinəqoyma (Məsələ 33)',
+   q:'Bubble və Yerinəqoyma metodlarını yerdəyişmələrin sayına görə müqayisə et: 21  17  4  69  67  42  12',
+   qEN:'Compare Bubble Sort vs Insertion Sort by number of swaps: 21  17  4  69  67  42  12'},
+  // ------ SORTING 34 ------
+  {id:34,cat:'Sıralama',type:'sort',algo:'merge',data:[47,16,41,22,4,12,1,7],
+   title:'Merge Sort (Məsələ 34)',
+   q:'Merge alqoritmi ilə nizamla: 47  16  41  22  4  12  1  7',
+   qEN:'Sort using Merge Sort: 47  16  41  22  4  12  1  7'},
+  // ------ COMPLEXITY 35-41 ------
+  {id:35,cat:'Mürəkkəblik',type:'complexity',cx:'cx35',title:'Asimptotik Analiz (Məsələ 35)',
+   q:'for i=1 to 2n / for j=1 to n / x=x+1',
+   qEN:'Find the time complexity: for i=1 to 2n / for j=1 to n / x=x+1'},
+  {id:36,cat:'Mürəkkəblik',type:'complexity',cx:'cx36',title:'Asimptotik Analiz (Məsələ 36)',
+   q:'for i=1 to n / for j=1 to i / for k=1 to j / x=x+1',
+   qEN:'Find the time complexity: for i=1 to n / for j=1 to i / for k=1 to j / x=x+1'},
+  {id:37,cat:'Mürəkkəblik',type:'complexity',cx:'cx37',title:'Asimptotik Analiz (Məsələ 37)',
+   q:'for i=1 to n / for j=1 to i / for k=1 to i / x=x+1',
+   qEN:'Find the time complexity: for i=1 to n / for j=1 to i / for k=1 to i / x=x+1'},
+  {id:38,cat:'Mürəkkəblik',type:'complexity',cx:'cx38',title:'Asimptotik Analiz (Məsələ 38)',
+   q:'i=n / while(i≥1) { x=x+1; i=i/2 }',
+   qEN:'Find the time complexity: i=n / while(i≥1) { x=x+1; i=i/2 }'},
+  {id:39,cat:'Mürəkkəblik',type:'complexity',cx:'cx39',title:'Asimptotik Analiz (Məsələ 39)',
+   q:'j=n / while(j≥1) { for i=1 to j: x=x+1; j=j/3 }',
+   qEN:'Find the time complexity: j=n / while(j≥1) { for i=1 to j: x=x+1; j=j/3 }'},
+  {id:40,cat:'Mürəkkəblik',type:'complexity',cx:'cx40',title:'Asimptotik Analiz (Məsələ 40)',
+   q:'i=n / while(i≥1) { for j=1 to n: x=x+1; i=i/2 }',
+   qEN:'Find the time complexity: i=n / while(i≥1) { for j=1 to n: x=x+1; i=i/2 }'},
+  {id:41,cat:'Mürəkkəblik',type:'complexity',cx:'cx41',title:'Asimptotik Analiz (Məsələ 41)',
+   q:'i=2 / while(i<n) { i=i*i; x=x+1 }',
+   qEN:'Find the time complexity: i=2 / while(i<n) { i=i*i; x=x+1 }'},
+];
+
+// =====================================================================
+// STEP GENERATORS — SORTING
+// =====================================================================
+function bubbleSteps(arr){
+  const S=[];const a=[...arr];const n=a.length;
+  let ops=0,swaps=0;
+  S.push({arr:[...a],cmp:[],sorted:new Set(),sp:{},ops,swaps,codeLine:1,
+    title:'Başlanğıc / Start',
+    desc:`<b>Massiv (Array):</b> [${a.join(', ')}]<br><br>Qabarcıq sıralama n=${n} ölçülü massivə tətbiq olunacaq. Qonşu cütlər müqayisə edilir; böyük olan sağa "qabarcıq kimi" köçürülür. Hər <i>keçid</i> sonunda ən böyük element öz yerinə düşür.<br><small style="color:var(--muted)">Bubble sort will compare adjacent pairs and push the largest to the right. Each pass places the biggest unsorted element in its final position.</small>`});
+  for(let i=0;i<n-1;i++){
+    for(let j=0;j<n-i-1;j++){
+      const v0=a[j],v1=a[j+1];ops++;
+      const needSwap=v0>v1;
+      const sortedSet=new Set(Array.from({length:i},(_,k)=>n-1-k));
+      S.push({arr:[...a],cmp:[j,j+1],sorted:sortedSet,sp:{},ops,swaps,codeLine:[2,3,4],
+        title:`Keçid ${i+1}, müqayisə j=${j} / Pass ${i+1}, compare j=${j}`,
+        desc:`<b>Kod sətri / Code line:</b> <code>if arr[${j}] > arr[${j+1}]</code><br><br>Mövqe <b>${j}</b> dəyər <b style="color:var(--amber)">${v0}</b> ilə mövqe <b>${j+1}</b> dəyər <b style="color:var(--amber)">${v1}</b> müqayisə edilir.<br>${needSwap?`⚠ <b>${v0} > ${v1}</b> — yerdəyişmə lazımdır! (swap needed)`:`✓ <b>${v0} ≤ ${v1}</b> — sıra düzgündür, keçirik (already in order, skip).`}<br><br><small style="color:var(--muted)">Əməliyyat sayı / Operations: ${ops}</small>`});
+      if(needSwap){[a[j],a[j+1]]=[a[j+1],a[j]];swaps++;
+        S.push({arr:[...a],cmp:[j,j+1],sorted:sortedSet,sp:{swp:true},ops,swaps,codeLine:5,
+          title:`Yerdəyişmə: arr[${j}]↔arr[${j+1}] / Swap`,
+          desc:`<b>Kod sətri / Code line:</b> <code>arr[${j}], arr[${j+1}] = arr[${j+1}], arr[${j}]</code><br><br><b style="color:var(--amber)">${v0}</b> və <b style="color:var(--amber)">${v1}</b> yerlərini dəyişdi (swapped).<br>Massiv indi / Array now: <b>[${a.join(', ')}]</b><br><br>Yerdəyişmə sayı / Swaps: <b>${swaps}</b>`});}
+    }
+    const sortedSet=new Set(Array.from({length:i+1},(_,k)=>n-1-k));
+    S.push({arr:[...a],cmp:[],sorted:sortedSet,sp:{},ops,swaps,codeLine:2,
+      title:`${i+1}-ci keçid bitdi / Pass ${i+1} complete`,
+      desc:`<b style="color:var(--teal)">${a[n-1-i]}</b> elementi öz son mövqeyinə (indeks <b>${n-1-i}</b>) çatdı — artıq hərəkət etməyəcək.<br><small style="color:var(--muted)">The largest unsorted element has bubbled to its final position at index ${n-1-i}.</small><br><br>Sıralanmış / Sorted: <b style="color:var(--teal)">[${[...sortedSet].sort((a,b)=>a-b).map(i=>a[i]).join(', ')}]</b>`});
+  }
+  S.push({arr:[...a],cmp:[],sorted:new Set(Array.from({length:n},(_,k)=>k)),sp:{},ops,swaps,codeLine:6,
+    title:'Sıralama tamamlandı ✓ / Sorting complete',
+    desc:`<b>Nəticə / Result:</b> <b style="color:var(--teal)">[${a.join(', ')}]</b><br><br>Cəmi <b>${ops}</b> müqayisə (comparison), <b>${swaps}</b> yerdəyişmə (swap).<br><small style="color:var(--muted)">All elements are in sorted order. Bubble Sort finished.</small>`});
+  return S;
+}
+
+function insertionSteps(arr){
+  const S=[];const a=[...arr];const n=a.length;
+  let ops=0,moves=0;
+  S.push({arr:[...a],cmp:[],sorted:new Set([0]),sp:{},ops,swaps:moves,codeLine:0,
+    title:'Başlanğıc / Start',
+    desc:`<b>Massiv / Array:</b> [${a.join(', ')}]<br><br>Yerinəqoyma sıralama ilk elementi (arr[0]=${a[0]}) sıralanmış hesab edərək başlayır. Hər addımda sıralanmamış hissədən bir "açar" (key) götürülür və sıralanmış hissədə öz yerinə qoyulur — kartları sıraladığınız kimi!<br><small style="color:var(--muted)">Insertion sort starts with the first element as "sorted". Each step picks the next key and inserts it into the correct position in the sorted portion.</small>`});
+  for(let i=1;i<n;i++){
+    const key=a[i];
+    S.push({arr:[...a],cmp:[],sorted:new Set(Array.from({length:i},(_,k)=>k)),sp:{key:i},ops,swaps:moves,codeLine:[1,2,3],
+      title:`i=${i}: Açar götürüldü / Key picked`,
+      desc:`<b>Kod / Code:</b> <code>key = arr[${i}]</code><br><br>Açar (key) = <b style="color:var(--blue)">${key}</b> (mövqe <b>${i}</b>).<br>Sıralanmış hissə / Sorted portion: <b style="color:var(--teal)">[${a.slice(0,i).join(', ')}]</b><br>İndi key=${key}-i bu hissədə düzgün yerə qoyacağıq.<br><small style="color:var(--muted)">j pointer starts at ${i-1} and will scan left.</small>`});
+    let j=i-1;
+    while(j>=0&&a[j]>key){
+      ops++;moves++;
+      a[j+1]=a[j];
+      S.push({arr:[...a],cmp:[j,j+1],sorted:new Set(Array.from({length:i},(_,k)=>k)),sp:{key:j+1},ops,swaps:moves,codeLine:[4,5,6],
+        title:`Sürüş: arr[${j}]=${a[j]} > key=${key} / Shift right`,
+        desc:`<b>Kod / Code:</b> <code>arr[${j+1}] = arr[${j}]</code><br><br><b style="color:var(--amber)">${a[j]}</b> (mövqe ${j}) sağa sürüşdürüldü → mövqe ${j+1}.<br>Key <b>${key}</b> hələ öz yerini axtarır.<br><small style="color:var(--muted)">Shift: ${a[j]} moved from index ${j} → ${j+1}. Operations: ${ops}</small>`});
+      j--;
+    }
+    ops++;
+    a[j+1]=key;
+    const sorted2=new Set(Array.from({length:i+1},(_,k)=>k));
+    S.push({arr:[...a],cmp:[],sorted:sorted2,sp:{},ops,swaps:moves,codeLine:7,
+      title:`Yerləşdirildi: arr[${j+1}]=${key} / Inserted`,
+      desc:`<b>Kod / Code:</b> <code>arr[${j+1}] = key  # key = ${key}</code><br><br><b style="color:var(--blue)">${key}</b> mövqe <b>${j+1}</b>-ə yerləşdirildi.<br>Sıralanmış hissə / Sorted: <b style="color:var(--teal)">[${a.slice(0,i+1).join(', ')}]</b>`});
+  }
+  S.push({arr:[...a],cmp:[],sorted:new Set(Array.from({length:n},(_,k)=>k)),sp:{},ops,swaps:moves,codeLine:8,
+    title:'Sıralama tamamlandı ✓ / Sorting complete',
+    desc:`<b>Nəticə / Result:</b> <b style="color:var(--teal)">[${a.join(', ')}]</b><br><br>Cəmi <b>${ops}</b> müqayisə (comparison), <b>${moves}</b> sürüş (shift).<br><small style="color:var(--muted)">All keys have been inserted into their correct positions.</small>`});
+  return S;
+}
+
+function selectionSteps(arr){
+  const S=[];const a=[...arr];const n=a.length;
+  let ops=0,swaps=0;
+  S.push({arr:[...a],cmp:[],sorted:new Set(),sp:{},ops,swaps,
+    title:'Başlanğıc',desc:`Massiv: <b>[${a.join(', ')}]</b>. Seçim hər keçiddə minimumu tapıb öndə olan sıralanmamışla dəyişir.`});
+  for(let i=0;i<n-1;i++){
+    let minIdx=i;
+    const sortedSet=new Set(Array.from({length:i},(_,k)=>k));
+    S.push({arr:[...a],cmp:[],sorted:sortedSet,sp:{min:i},ops,swaps,
+      title:`${i+1}-ci keçid — minimum axtarışı`,
+      desc:`Sıralanmamış hissə: <b>[${a.slice(i).join(', ')}]</b>. Minimum indeks <b>${i}</b> (dəyər <b>${a[i]}</b>) olaraq qəbul edilir.`});
+    for(let j=i+1;j<n;j++){
+      ops++;
+      S.push({arr:[...a],cmp:[j,minIdx],sorted:sortedSet,sp:{min:minIdx},ops,swaps,
+        title:`Müqayisə: [${j}]=${a[j]} ${a[j]<a[minIdx]?'<':'≥'} min=${a[minIdx]}`,
+        desc:`<b>${a[j]}</b> ilə cari minimum <b>${a[minIdx]}</b> müqayisə edilir. ${a[j]<a[minIdx]?`<b>${a[j]} < ${a[minIdx]}</b> — yeni minimum tapıldı!`:`<b>${a[j]} ≥ ${a[minIdx]}</b> — minimum dəyişmir.`}`});
+      if(a[j]<a[minIdx])minIdx=j;
+    }
+    if(minIdx!==i){[a[i],a[minIdx]]=[a[minIdx],a[i]];swaps++;}
+    sortedSet.add(i);
+    S.push({arr:[...a],cmp:[],sorted:new Set(Array.from({length:i+1},(_,k)=>k)),sp:{},ops,swaps,
+      title:`Minimum mövqe ${i}-ə qoyuldu`,
+      desc:`<b>${a[i]}</b> mövqe <b>${i}</b>-ə yerləşdirildi${minIdx!==i?` (mövqe ${i} ilə ${minIdx} dəyişdi)`:` (yerdəyişmə lazım deyildi)`}.`});
+  }
+  S.push({arr:[...a],cmp:[],sorted:new Set(Array.from({length:n},(_,k)=>k)),sp:{},ops,swaps,
+    title:'Sıralama tamamlandı ✓',
+    desc:`Nəticə: <b>[${a.join(', ')}]</b> — Cəmi <b>${ops}</b> müqayisə, <b>${swaps}</b> yerdəyişmə.`});
+  return S;
+}
+
+function shellSteps(arr){
+  const S=[];const a=[...arr];const n=a.length;
+  let ops=0,moves=0;
+  const gaps=[];let g=Math.floor(n/2);while(g>0){gaps.push(g);g=Math.floor(g/2);}
+  S.push({arr:[...a],cmp:[],sorted:new Set(),sp:{},ops,swaps:moves,gap:null,
+    title:'Başlanğıc',desc:`Massiv: <b>[${a.join(', ')}]</b>. Şell sıralama gap ardıcıllığı: <b>[${gaps.join(', ')}]</b>. Böyük gap ilə başlayır.`});
+  for(const gap of gaps){
+    S.push({arr:[...a],cmp:[],sorted:new Set(),sp:{},ops,swaps:moves,gap,
+      title:`Yeni mərhələ — gap = ${gap}`,
+      desc:`Gap <b>${gap}</b> ilə başlayırıq. Hər element özündən <b>${gap}</b> mövqe geridəki ilə müqayisə olunacaq. Bu mərhələdə massiv <b>${gap}</b> aralı Insertion Sort alır.`});
+    for(let i=gap;i<n;i++){
+      const temp=a[i];let j=i;
+      S.push({arr:[...a],cmp:[],sorted:new Set(),sp:{key:i},ops,swaps:moves,gap,
+        title:`gap=${gap}: element [${i}]=${temp} götürüldü`,
+        desc:`<b>${temp}</b> götürüldü (mövqe <b>${i}</b>). Gap=<b>${gap}</b> geri baxılır.`});
+      while(j>=gap&&a[j-gap]>temp){
+        ops++;moves++;a[j]=a[j-gap];
+        S.push({arr:[...a],cmp:[j-gap,j],sorted:new Set(),sp:{key:j},ops,swaps:moves,gap,
+          title:`Sürüşdür: [${j-gap}]=${a[j]} > ${temp}`,
+          desc:`<b>${a[j]}</b> (mövqe ${j-gap}) → mövqe <b>${j}</b> köçürüldü.`});
+        j-=gap;
+      }
+      ops++;a[j]=temp;
+      S.push({arr:[...a],cmp:[],sorted:new Set(),sp:{},ops,swaps:moves,gap,
+        title:`Yerləşdirildi: [${j}]=${temp}`,
+        desc:`<b>${temp}</b> mövqe <b>${j}</b>-ə yerləşdirildi.`});
+    }
+  }
+  S.push({arr:[...a],cmp:[],sorted:new Set(Array.from({length:n},(_,k)=>k)),sp:{},ops,swaps:moves,gap:null,
+    title:'Sıralama tamamlandı ✓',
+    desc:`Nəticə: <b>[${a.join(', ')}]</b> — Cəmi <b>${ops}</b> müqayisə, <b>${moves}</b> hərəkət.`});
+  return S;
+}
+
+function quickSteps(arr){
+  const S=[];const a=[...arr];const n=a.length;
+  let ops=0,swaps=0;
+  const sortedGlobal=new Set();
+  S.push({arr:[...a],cmp:[],sorted:new Set(),sp:{},ops,swaps,
+    title:'Başlanğıc',desc:`Massiv: <b>[${a.join(', ')}]</b>. QuickSort son elementi pivot seçir, sonra partition edir.`});
+  const stack=[[0,n-1]];
+  while(stack.length>0){
+    const [low,high]=stack.pop();
+    if(low>=high){if(low===high)sortedGlobal.add(low);continue;}
+    const pivot=a[high];
+    S.push({arr:[...a],cmp:[],sorted:new Set(sortedGlobal),sp:{pivot:high},ops,swaps,
+      title:`Pivot seçildi: [${high}]=${pivot}`,
+      desc:`Alt massiv [<b>${low}</b>..<b>${high}</b>] üçün pivot = <b>${pivot}</b> (son element, mövqe ${high}). Partition başlayır.`});
+    let i=low-1;
+    for(let j=low;j<high;j++){
+      ops++;
+      S.push({arr:[...a],cmp:[j,high],sorted:new Set(sortedGlobal),sp:{pivot:high},ops,swaps,
+        title:`Müqayisə: [${j}]=${a[j]} ${a[j]<=pivot?'≤':'>'}  pivot=${pivot}`,
+        desc:`<b>${a[j]}</b> (mövqe ${j}) pivot <b>${pivot}</b> ilə müqayisə edilir. ${a[j]<=pivot?`≤ pivot — i artır, yerdəyişmə.`:`> pivot — keç.`}`});
+      if(a[j]<=pivot){i++;if(i!==j){[a[i],a[j]]=[a[j],a[i]];swaps++;
+        S.push({arr:[...a],cmp:[i,j],sorted:new Set(sortedGlobal),sp:{pivot:high,swp:true},ops,swaps,
+          title:`Yerdəyişmə: mövqe ${i} ↔ ${j}`,
+          desc:`<b>${a[j]}</b> və <b>${a[i]}</b> yerlərini dəyişdi.`});}}
+    }
+    [a[i+1],a[high]]=[a[high],a[i+1]];swaps++;sortedGlobal.add(i+1);
+    S.push({arr:[...a],cmp:[],sorted:new Set(sortedGlobal),sp:{pivot:i+1},ops,swaps,
+      title:`Pivot yerinə qoyuldu: mövqe ${i+1}`,
+      desc:`Pivot <b>${a[i+1]}</b> öz final mövqeyinə (<b>${i+1}</b>) qoyuldu. Sol: [${low}..${i}], Sağ: [${i+2}..${high}].`});
+    if(i+2<=high)stack.push([i+2,high]);
+    if(low<=i)stack.push([low,i]);
+  }
+  for(let k=0;k<n;k++)sortedGlobal.add(k);
+  S.push({arr:[...a],cmp:[],sorted:new Set(sortedGlobal),sp:{},ops,swaps,
+    title:'QuickSort tamamlandı ✓',
+    desc:`Nəticə: <b>[${a.join(', ')}]</b> — Cəmi <b>${ops}</b> müqayisə, <b>${swaps}</b> yerdəyişmə.`});
+  return S;
+}
+
+function mergeSteps(arr){
+  const S=[];const a=[...arr];const n=a.length;
+  let ops=0;
+  S.push({arr:[...a],cmp:[],sorted:new Set(),sp:{},ops,mergeInfo:'',
+    title:'Başlanğıc',desc:`Massiv: <b>[${a.join(', ')}]</b>. Merge Sort kənar hissəyə bölür, sonra birləşdirir.`});
+  function doMerge(arr2,l,m,r,depth){
+    const left=arr2.slice(l,m+1);const right=arr2.slice(m+1,r+1);
+    let i=0,j=0,k=l;
+    const info=`Birləşdir: [${l}..${m}]+[${m+1}..${r}]`;
+    S.push({arr:[...arr2],cmp:[],sorted:new Set(),sp:{lrange:[l,m],rrange:[m+1,r]},ops,mergeInfo:info,
+      title:`Birləşdirmə başlayır [${l}..${m}] + [${m+1}..${r}]`,
+      desc:`Sol: <b>[${left.join(', ')}]</b> · Sağ: <b>[${right.join(', ')}]</b>. Element-element müqayisə edərək birləşdiririk.`});
+    while(i<left.length&&j<right.length){
+      ops++;
+      S.push({arr:[...arr2],cmp:[l+i,m+1+j],sorted:new Set(),sp:{lrange:[l,m],rrange:[m+1,r]},ops,mergeInfo:info,
+        title:`Müqayisə: ${left[i]} ${left[i]<=right[j]?'≤':'>'}  ${right[j]}`,
+        desc:`Sol göstərici: <b>${left[i]}</b> (mövqe ${l+i}) · Sağ göstərici: <b>${right[j]}</b> (mövqe ${m+1+j}). ${left[i]<=right[j]?`<b>${left[i]}</b> seçilir.`:`<b>${right[j]}</b> seçilir.`}`});
+      if(left[i]<=right[j]){arr2[k++]=left[i++];}else{arr2[k++]=right[j++];}
+      S.push({arr:[...arr2],cmp:[],sorted:new Set(),sp:{lrange:[l,m],rrange:[m+1,r],placed:k-1},ops,mergeInfo:info,
+        title:`Mövqe ${k-1} dolduruldu`,
+        desc:`<b>${arr2[k-1]}</b> mövqe <b>${k-1}</b>-ə yazıldı.`});
+    }
+    while(i<left.length){arr2[k++]=left[i++];}
+    while(j<right.length){arr2[k++]=right[j++];}
+    const done=new Set(Array.from({length:r-l+1},(_,x)=>l+x));
+    S.push({arr:[...arr2],cmp:[],sorted:done,sp:{},ops,mergeInfo:'',
+      title:`Birləşdirmə tamamlandı [${l}..${r}]`,
+      desc:`[${l}..${r}] aralığı sıralandı: <b>[${arr2.slice(l,r+1).join(', ')}]</b>`});
+  }
+  function msort(arr2,l,r,depth){
+    if(l>=r)return;
+    const m=Math.floor((l+r)/2);
+    S.push({arr:[...arr2],cmp:[],sorted:new Set(),sp:{lrange:[l,m],rrange:[m+1,r]},ops,mergeInfo:`Böl: [${l}..${r}] → [${l}..${m}] + [${m+1}..${r}]`,
+      title:`Böl: [${l}..${r}]`,
+      desc:`[<b>${l}</b>..<b>${r}</b>] aralığı ikiyə bölünür: sol [<b>${l}</b>..<b>${m}</b>], sağ [<b>${m+1}</b>..<b>${r}</b>].`});
+    msort(arr2,l,m,depth+1);
+    msort(arr2,m+1,r,depth+1);
+    doMerge(arr2,l,m,r,depth);
+  }
+  const tmp=[...a];msort(tmp,0,n-1,0);
+  S.push({arr:[...tmp],cmp:[],sorted:new Set(Array.from({length:n},(_,k)=>k)),sp:{},ops,mergeInfo:'',
+    title:'Merge Sort tamamlandı ✓',
+    desc:`Nəticə: <b>[${tmp.join(', ')}]</b> — Cəmi <b>${ops}</b> müqayisə.`});
+  return S;
+}
+
+// =====================================================================
+// STEP GENERATORS — GRAPH
+// =====================================================================
+// Pentagon node positions (for SVG 560×340)
+const GNODES=[
+  {id:1,x:280,y:50},{id:2,x:412,y:144},{id:3,x:364,y:300},
+  {id:4,x:196,y:300},{id:5,x:148,y:144}
+];
+const SVGNS='http://www.w3.org/2000/svg';
+const ek=(a,b)=>[Math.min(a,b),Math.max(a,b)].join('-');
+
+function buildGraphSVG(container,edges,state){
+  container.innerHTML='';
+  const svg=document.createElementNS(SVGNS,'svg');
+  svg.setAttribute('class','gviz');svg.setAttribute('viewBox','0 0 560 340');
+  svg.setAttribute('role','img');
+  // edges
+  const edgeEls={},wbEls={};
+  edges.forEach(e=>{
+    const k=ek(e[0],e[1]);
+    const na=GNODES.find(n=>n.id===e[0]),nb=GNODES.find(n=>n.id===e[1]);
+    const line=document.createElementNS(SVGNS,'line');
+    line.setAttribute('x1',na.x);line.setAttribute('y1',na.y);
+    line.setAttribute('x2',nb.x);line.setAttribute('y2',nb.y);
+    let cls='gedge';
+    if(state.tree&&state.tree.has(k))cls+=' tree';
+    else if(state.consider===k){cls+=state.reject?' reject':' consider';}
+    line.setAttribute('class',cls);svg.appendChild(line);edgeEls[k]=line;
+    // weight badge
+    const mx=(na.x+nb.x)/2,my=(na.y+nb.y)/2;
+    const g=document.createElementNS(SVGNS,'g');
+    g.setAttribute('class','wbadge'+(state.consider===k?' hot':(state.tree&&state.tree.has(k)?' on':'')));
+    const r2=document.createElementNS(SVGNS,'rect');
+    r2.setAttribute('x',mx-13);r2.setAttribute('y',my-11);r2.setAttribute('width',26);r2.setAttribute('height',22);
+    r2.setAttribute('rx',5);r2.setAttribute('fill','#0d1117');r2.setAttribute('stroke','#283242');r2.setAttribute('stroke-width','1');
+    const t2=document.createElementNS(SVGNS,'text');t2.setAttribute('x',mx);t2.setAttribute('y',my);t2.textContent=e[2];
+    if(state.consider===k){r2.setAttribute('stroke',state.reject?'#f0716e':'#f5a623');t2.setAttribute('fill',state.reject?'#f0716e':'#f5a623');}
+    else if(state.tree&&state.tree.has(k)){r2.setAttribute('stroke','#2dd4bf');t2.setAttribute('fill','#2dd4bf');}
+    g.appendChild(r2);g.appendChild(t2);svg.appendChild(g);
+  });
+  // nodes
+  GNODES.forEach(n=>{
+    const g=document.createElementNS(SVGNS,'g');
+    let cls='gnode';
+    if(state.inNodes&&state.inNodes.has(n.id))cls+=' in';
+    if(state.cur===n.id)cls+=' cur';
+    g.setAttribute('class',cls);
+    const c=document.createElementNS(SVGNS,'circle');c.setAttribute('cx',n.x);c.setAttribute('cy',n.y);c.setAttribute('r',24);
+    const t=document.createElementNS(SVGNS,'text');t.setAttribute('class','lbl');t.setAttribute('x',n.x);t.setAttribute('y',n.y);t.textContent=n.id;
+    g.appendChild(c);g.appendChild(t);
+    if(state.dist&&state.dist[n.id]!==undefined&&state.dist[n.id]!==Infinity){
+      const d=document.createElementNS(SVGNS,'text');d.setAttribute('class','dlbl');
+      d.setAttribute('x',n.x);d.setAttribute('y',n.y-36);d.textContent='d='+state.dist[n.id];
+      g.appendChild(d);
+    }
+    svg.appendChild(g);
+  });
+  container.appendChild(svg);
+}
+
+function primSteps(edges){
+  const S=[];
+  const adj={};for(let i=1;i<=5;i++)adj[i]=[];
+  edges.forEach(e=>{adj[e[0]].push([e[1],e[2]]);adj[e[1]].push([e[0],e[2]]);});
+  const inN=new Set([1]);const tree=new Set();
+  const mkPanel=()=>{
+    const cand=edges.filter(e=>inN.has(e[0])!==inN.has(e[1])).sort((a,b)=>a[2]-b[2]);
+    const rows=cand.map(e=>`<div class="srow ${inN.has(e[0])&&inN.has(e[1])?'done':''}">${e[0]}–${e[1]}<span>${e[2]}</span></div>`).join('')||'<div class="srow done">Boşdur ✓</div>';
+    return `<div class="slbl">Ağacdakı təpələr</div><div class="srow done">${[...inN].join(', ')} <span>${inN.size}/5</span></div><div class="slbl">Frontier kənarları</div>${rows}`;
+  };
+  S.push({tree:new Set(),consider:null,reject:false,inNodes:new Set(inN),cur:null,dist:null,
+    title:'Başlanğıc',desc:'<b>1</b> təpəsindən başlayırıq. Ağac tərəfindən çölə çıxan ən kiçik kənarı axtarırıq.',panel:mkPanel()});
+  while(inN.size<5){
+    const cand=edges.filter(e=>inN.has(e[0])!==inN.has(e[1])).sort((a,b)=>a[2]-b[2]);
+    if(!cand.length)break;
+    const pick=cand[0];const nv=inN.has(pick[0])?pick[1]:pick[0];
+    inN.add(nv);tree.add(ek(pick[0],pick[1]));
+    S.push({tree:new Set(tree),consider:ek(pick[0],pick[1]),reject:false,inNodes:new Set(inN),cur:nv,dist:null,
+      title:`Ən kiçik kənar: ${pick[0]}–${pick[1]} (${pick[2]})`,
+      desc:`Frontier kənarları arasında ən kiçiyi <b>${pick[0]}–${pick[1]}</b> (çəki <b>${pick[2]}</b>). <b>${nv}</b> ağaca əlavə edildi.`,panel:mkPanel()});
+  }
+  const total=[...tree].reduce((s,k)=>{const e=edges.find(e=>ek(e[0],e[1])===k);return s+(e?e[2]:0);},0);
+  S.push({tree:new Set(tree),consider:null,reject:false,inNodes:new Set(inN),cur:null,dist:null,
+    title:'MST hazırdır ✓',desc:`Bütün təpələr birləşdi. Minimal Örtən Ağac — ümumi çəki <b>${total}</b>.`,panel:mkPanel()});
+  return S;
+}
+
+function kruskalSteps(edges){
+  const S=[];
+  const sorted=[...edges].sort((a,b)=>a[2]-b[2]);
+  const status={};sorted.forEach(e=>status[ek(e[0],e[1])]='wait');
+  const par={};for(let i=1;i<=5;i++)par[i]=i;
+  const find=x=>{while(par[x]!==x){par[x]=par[par[x]];x=par[x];}return x;};
+  const tree=new Set();const inN=new Set();let total=0;
+  const mkPanel=()=>{
+    const map={wait:'',ok:'done',rej:'rej'};
+    const lab={wait:'gözləyir',ok:'qəbul',rej:'rədd'};
+    return `<div class="slbl">Sıralanmış kənarlar</div>${sorted.map(e=>{const k=ek(e[0],e[1]);return `<div class="srow ${map[status[k]]}">${e[0]}–${e[1]} (${e[2]}) <span class="sbadge">${lab[status[k]]}</span></div>`;}).join('')}`;
+  };
+  S.push({tree:new Set(),consider:null,reject:false,inNodes:new Set(),cur:null,dist:null,
+    title:'Başlanğıc',desc:`Bütün kənarlar çəkiyə görə sıralandı: <b>[${sorted.map(e=>`${e[0]}-${e[1]}(${e[2]})`).join(', ')}]</b>. Növbə ilə hər birə baxacağıq.`,panel:mkPanel()});
+  for(const e of sorted){
+    const k=ek(e[0],e[1]);const ru=find(e[0]),rv=find(e[1]);
+    if(ru!==rv){
+      par[ru]=rv;tree.add(k);total+=e[2];status[k]='ok';inN.add(e[0]);inN.add(e[1]);
+      S.push({tree:new Set(tree),consider:k,reject:false,inNodes:new Set(inN),cur:null,dist:null,
+        title:`Qəbul ✓: ${e[0]}–${e[1]} (${e[2]})`,
+        desc:`<b>${e[0]}</b> və <b>${e[1]}</b> fərqli komponentlərdədir. Dövrə yaranmır — <b>qəbul edirik</b>.`,panel:mkPanel()});
+    }else{
+      status[k]='rej';
+      S.push({tree:new Set(tree),consider:k,reject:true,inNodes:new Set(inN),cur:null,dist:null,
+        title:`Rədd ✕: ${e[0]}–${e[1]} (${e[2]})`,
+        desc:`<b>${e[0]}</b> və <b>${e[1]}</b> eyni komponentdədir — bu kənar dövrə yaradır. <b>Rədd edirik</b>.`,panel:mkPanel()});
+    }
+    if(tree.size===4)break;
+  }
+  S.push({tree:new Set(tree),consider:null,reject:false,inNodes:new Set(inN),cur:null,dist:null,
+    title:'MST hazırdır ✓',desc:`4 kənar seçildi, MST hazırdır — ümumi çəki <b>${total}</b>.`,panel:mkPanel()});
+  return S;
+}
+
+function dijkstraSteps(edges){
+  const S=[];
+  const adj={};for(let i=1;i<=5;i++)adj[i]=[];
+  edges.forEach(e=>{adj[e[0]].push([e[1],e[2]]);adj[e[1]].push([e[0],e[2]]);});
+  const dist={};for(let i=1;i<=5;i++)dist[i]=Infinity;dist[1]=0;
+  const visited=new Set();const prev={};const treeK=new Set();
+  const mkPanel=(cur)=>{
+    const rows=[1,2,3,4,5].map(n=>{const cls=n===cur?'cur':(visited.has(n)?'done':'');
+      const d=dist[n]===Infinity?'∞':dist[n];
+      return `<tr class="${cls}"><td>${n}</td><td>${d}</td><td>${prev[n]||'—'}</td></tr>`;}).join('');
+    return `<div class="slbl">Məsafə cədvəli</div><table class="dtbl"><thead><tr><th>Təpə</th><th>dist</th><th>əvv.</th></tr></thead><tbody>${rows}</tbody></table>`;
+  };
+  S.push({tree:new Set(),consider:null,reject:false,inNodes:new Set(),cur:null,dist:{...dist},
+    title:'Başlanğıc',desc:'Mənbə <b>1</b>. dist[1]=0, qalanlar ∞. Hər addımda ən qısa məsafəli yekunlaşmamış təpəni seçirik.',panel:mkPanel(null)});
+  while(visited.size<5){
+    let u=null,best=Infinity;
+    for(let i=1;i<=5;i++)if(!visited.has(i)&&dist[i]<best){best=dist[i];u=i;}
+    if(u===null)break;
+    visited.add(u);if(prev[u])treeK.add(ek(prev[u],u));
+    const updates=[];
+    for(const[v,w]of adj[u]){
+      if(visited.has(v))continue;
+      if(dist[u]+w<dist[v]){dist[v]=dist[u]+w;prev[v]=u;updates.push(`dist[${v}]=${dist[v]}`);}
+    }
+    S.push({tree:new Set(treeK),consider:null,reject:false,inNodes:new Set(visited),cur:u,dist:{...dist},
+      title:`Yekunlaşdırıldı: Təpə ${u} (dist=${best})`,
+      desc:`Ən qısa dist olan <b>${u}</b> (dist=<b>${best}</b>) yekunlaşdırıldı. ${updates.length?`Yeniləndi: <b>${updates.join(', ')}</b>`:'Qonşuları üçün yeniləmə yoxdur.'}`,panel:mkPanel(u)});
+  }
+  S.push({tree:new Set(treeK),consider:null,reject:false,inNodes:new Set(visited),cur:null,dist:{...dist},
+    title:'Deykstra tamamlandı ✓',
+    desc:`Bütün ən qısa yollar tapıldı: ${[1,2,3,4,5].map(i=>`d[${i}]=${dist[i]===Infinity?'∞':dist[i]}`).join(', ')}.`,panel:mkPanel(null)});
+  return S;
+}
+
+// =====================================================================
+// COMPARE MODE
+// =====================================================================
+function compareSteps(arr,alg1,alg2,metric){
+  const genFn={bubble:bubbleSteps,insertion:insertionSteps,selection:selectionSteps};
+  const s1=genFn[alg1]([...arr]);const s2=genFn[alg2]([...arr]);
+  const combined=[];const maxLen=Math.max(s1.length,s2.length);
+  for(let i=0;i<maxLen;i++){
+    combined.push({
+      type:'compare',
+      s1:s1[Math.min(i,s1.length-1)],
+      s2:s2[Math.min(i,s2.length-1)],
+      metric, alg1, alg2,
+      prog1:Math.min(i,s1.length-1),prog2:Math.min(i,s2.length-1),
+      total1:s1.length,total2:s2.length
+    });
+  }
+  return combined;
+}
+
+// =====================================================================
+// COMPLEXITY ANALYSIS STEPS
+// =====================================================================
+const CX_STEPS={
+cx35:[
+  {title:'Kod nədir?',code:`for i = 1 to <span class="hl">2n</span>\n  for j = 1 to <span class="hl">n</span>\n    x = x + 1`,
+   math:'Xarici dövr: i = 1..2n → <span class="hl">2n</span> dəfə işləyir',desc:'Xarici dövrün neçə dəfə işlədiyini sayaq.'},
+  {title:'Daxili dövr',code:`for i = 1 to 2n\n  for j = 1 to <span class="hl">n</span> → n iterasiya\n    x = x + 1`,
+   math:'Daxili dövr: j = 1..n → hər i üçün <span class="hl">n</span> dəfə',desc:'Hər i üçün daxili dövr n dəfə işləyir.'},
+  {title:'Cəmi əməliyyat',code:`for i = 1 to 2n     — 2n dəfə\n  for j = 1 to n    — n dəfə\n    x = x + 1`,
+   math:'T(n) = 2n × n = <span class="hl">2n²</span>',desc:'Xarici dövr 2n, daxili n — cəmi 2n² əməliyyat.'},
+  {title:'Big-O nəticə',code:`T(n) = 2n²`,
+   math:'Big-O: sabit çarpanı atırıq → <span class="res">O(n²)</span>',result:'O(n²)',rdesc:'İki iç-içə dövr → kvadratik mürəkkəblik.'}
+],
+cx36:[
+  {title:'Kod strukturu',code:`for i=1 to n\n  for j=1 to i\n    for k=1 to <span class="hl">j</span>\n      x=x+1`,math:'Üç iç-içə dövr. Hər səviyyə daxildəkindən asılıdır.',desc:'k dövrü j-yə, j dövrü i-yə bağlıdır.'},
+  {title:'k dövrü analizi',code:`for k=1 to j → j iterasiya`,math:'k dövrü: j iterasiya',desc:'Ən daxili dövr j dəfə işləyir.'},
+  {title:'j dövrü toplama',code:`for j=1 to i: sum_j(j) = 1+2+...+i = <span class="hl">i(i+1)/2</span>`,math:'j=1..i üzrə k = Σj = i(i+1)/2 ≈ i²/2',desc:'Orta dövr j=1-dən i-yə kimi j toplamı verir.'},
+  {title:'i dövrü toplama',code:`T(n) = Σ(i=1..n) i²/2 ≈ n³/6`,math:'T(n) = n(n+1)(2n+1)/12 ≈ <span class="hl">n³/6</span>',desc:'Xarici dövrü topladıqda kubik nəticə alırıq.'},
+  {title:'Big-O nəticə',code:`T(n) ≈ n³/6`,math:'Big-O: sabit atılır → <span class="res">O(n³)</span>',result:'O(n³)',rdesc:'Üç iç-içə dövr (dəyişən həddlər) → kubik.'}
+],
+cx37:[
+  {title:'Kod strukturu',code:`for i=1 to n\n  for j=1 to i\n    for k=1 to <span class="hl">i</span>   ← j yox, i!\n      x=x+1`,math:'k dövrünün həddi j deyil, <span class="hl">i</span>-dir!',desc:'Diqqət: ən daxili dövr j-yə yox, i-yə qədərdir.'},
+  {title:'k dövrü',code:`for k=1 to i → i iterasiya`,math:'k dövrü: i iterasiya (j-dən asılı deyil)',desc:'Ən daxili dövr hər dəfə i dəfə işləyir.'},
+  {title:'j dövrü',code:`for j=1 to i: hər j üçün i əməliyyat → i×i = <span class="hl">i²</span>`,math:'j=1..i üzrə cəm = i × i = i²',desc:'J dövrü i dəfə işləyir, hər dəfə i əməliyyat — cəmi i².'},
+  {title:'i dövrü toplama',code:`T(n) = Σ(i=1..n) i² = n(n+1)(2n+1)/6 ≈ <span class="hl">n³/3</span>`,math:'T(n) = Σi² ≈ n³/3',desc:'Bütün i üçün topladıqda kubik alırıq.'},
+  {title:'Big-O nəticə',code:`T(n) ≈ n³/3`,math:'Big-O → <span class="res">O(n³)</span>',result:'O(n³)',rdesc:'Üç dövr, amma k-nın həddi i (j deyil) — yenə kubik.'}
+],
+cx38:[
+  {title:'Kod strukturu',code:`i = n\nwhile (i >= 1) {\n  x = x+1\n  i = <span class="hl">i / 2</span>   ← hər dəfə yarıya bölünür\n}`,math:'i: n → n/2 → n/4 → ... → 1',desc:'i hər addımda yarıya bölünür.'},
+  {title:'Neçə addım?',code:`n, n/2, n/4, ..., 1\nŞərt: n/2^k >= 1 → 2^k <= n → k <= log₂(n)`,math:'Addımlar sayı = <span class="hl">⌊log₂(n)⌋ + 1</span>',desc:'i sıfıra çatana kimi log₂(n) dəfə yarıya bölünür.'},
+  {title:'Big-O nəticə',code:`T(n) = log₂(n)`,math:'Big-O → <span class="res">O(log n)</span>',result:'O(log n)',rdesc:'Hər addımda problemi yarıya böldükdə loqarifmik mürəkkəblik alınır.'}
+],
+cx39:[
+  {title:'Kod strukturu',code:`j = n\nwhile (j >= 1) {\n  for i=1 to j: x=x+1\n  j = <span class="hl">j / 3</span>   ← üçə bölünür\n}`,math:'j: n → n/3 → n/9 → ...',desc:'j hər addımda üçə bölünür. Hər while iterasiyasında j dəfə daxili dövr işləyir.'},
+  {title:'Daxili dövr sayı',code:`while j=n:   n iterasiya\nwhile j=n/3: n/3 iterasiya\nwhile j=n/9: n/9 iterasiya\n...`,math:'T(n) = n + n/3 + n/9 + ... = n·Σ(1/3)^k',desc:'Sonsuz həndəsi sıranın cəmi: n × 1/(1-1/3) = 3n/2.'},
+  {title:'Big-O nəticə',code:`T(n) = n·(3/2) = 1.5n`,math:'Big-O → <span class="res">O(n)</span>',result:'O(n)',rdesc:'Geometrik sıranın cəmi sabit çarpan verir — nəticə xəttidir.'}
+],
+cx40:[
+  {title:'Kod strukturu',code:`i = n\nwhile (i >= 1) {\n  for j=1 to <span class="hl">n</span>: x=x+1   ← hər dəfə n iterasiya!\n  i = i / 2\n}`,math:'While iterasiya sayı: log₂(n). Hər dəfə n iterasiya.',desc:'Xarici while log₂(n) dəfə, daxili for hər dəfə n dəfə işləyir.'},
+  {title:'Hesablama',code:`T(n) = log₂(n) × n`,math:'T(n) = <span class="hl">n·log₂(n)</span>',desc:'Cəmi n çarpı log₂(n).'},
+  {title:'Big-O nəticə',code:`T(n) = n·log n`,math:'Big-O → <span class="res">O(n log n)</span>',result:'O(n log n)',rdesc:'İkiyə bölünən xarici dövr × n daxili dövr → n log n.'}
+],
+cx41:[
+  {title:'Kod strukturu',code:`i = 2\nwhile (i < n) {\n  i = <span class="hl">i * i</span>   ← kvadratlanır!\n  x = x+1\n}`,math:'i: 2 → 4 → 16 → 256 → ...',desc:'i hər addımda kvadratlanır. Bu çox sürətli artır!'},
+  {title:'Nə vaxt dayanır?',code:`Addım 0: i = 2 = 2^1\nAddım 1: i = 4 = 2^2\nAddım 2: i = 16 = 2^4\nAddım k: i = 2^(2^k)`,math:'Şərt: 2^(2^k) >= n → 2^k >= log₂(n) → k >= log₂(log₂(n))',desc:'k addımdan sonra i≥n olur.'},
+  {title:'Big-O nəticə',code:`T(n) = log(log(n))`,math:'Big-O → <span class="res">O(log log n)</span>',result:'O(log log n)',rdesc:'Kvadratlama çox sürətli böyüyür — log log n addım kifayətdir.'}
+]
+};
+
+// =====================================================================
+// RENDER FUNCTIONS
+// =====================================================================
+function renderBars(container,step){
+  const arr=step.arr;const n=arr.length;
+  const maxV=Math.max(...arr)||1;
+  let html='<div class="bar-group">';
+  for(let i=0;i<n;i++){
+    const h=Math.round((arr[i]/maxV)*185)+10;
+    let cls='bar-rect';
+    if(step.sp&&step.sp.pivot===i)cls+=' pivot';
+    else if(step.sp&&step.sp.key===i)cls+=' keyv';
+    else if(step.sp&&step.sp.min===i)cls+=' minv';
+    else if(step.cmp&&step.cmp.includes(i))cls+=' cmp';
+    else if(step.sorted&&step.sorted.has(i))cls+=' sorted';
+    else if(step.sp&&step.sp.lrange&&i>=step.sp.lrange[0]&&i<=step.sp.lrange[1])cls+=' lhalf';
+    else if(step.sp&&step.sp.rrange&&i>=step.sp.rrange[0]&&i<=step.sp.rrange[1])cls+=' rhalf';
+    html+=`<div class="bar-col"><div class="bar-val">${arr[i]}</div><div class="bar-rect ${cls}" style="height:${h}px"></div><div class="bar-idx">${i}</div></div>`;
+  }
+  html+='</div>';
+  container.innerHTML=html;
+}
+
+function renderCompare(container,step){
+  const s1=step.s1,s2=step.s2;
+  const metric=step.metric;
+  const v1=metric==='ops'?s1.ops:s1.swaps;
+  const v2=metric==='ops'?s2.ops:s2.swaps;
+  const lbl={bubble:'Qabarcıq',insertion:'Yerinəqoyma',selection:'Seçim'};
+  const metricLbl=metric==='ops'?'müqayisə':'yerdəyişmə';
+  container.innerHTML=`<div class="cmp-wrap">
+    <div class="cmp-side"><div class="cmp-label">${lbl[step.alg1]}</div>${getBarsHTML(s1)}<div class="cmp-stats"><span class="cmp-stat ${v1<=v2?'better':''}">${metricLbl}: ${v1}</span></div></div>
+    <div class="cmp-side"><div class="cmp-label">${lbl[step.alg2]}</div>${getBarsHTML(s2)}<div class="cmp-stats"><span class="cmp-stat ${v2<=v1?'better':''}">${metricLbl}: ${v2}</span></div></div>
+  </div>`;
+}
+
+function getBarsHTML(step){
+  const arr=step.arr;const n=arr.length;const maxV=Math.max(...arr)||1;
+  let html='<div class="bar-group" style="height:160px;padding:8px 6px 4px">';
+  for(let i=0;i<n;i++){
+    const h=Math.round((arr[i]/maxV)*140)+8;
+    let cls='bar-rect';
+    if(step.cmp&&step.cmp.includes(i))cls+=' cmp';
+    else if(step.sorted&&step.sorted.has(i))cls+=' sorted';
+    else if(step.sp&&step.sp.min===i)cls+=' minv';
+    html+=`<div class="bar-col" style="max-width:48px"><div class="bar-val" style="font-size:9.5px">${arr[i]}</div><div class="${cls}" style="height:${h}px;width:100%"></div></div>`;
+  }
+  return html+'</div>';
+}
+
+function renderComplexity(container,mergeInfoEl,steps,idx){
+  const s=steps[idx];
+  let html='<div class="cx-view">';
+  // code
+  html+=`<div class="slbl">Kod</div><div class="cx-code">${s.code}</div>`;
+  // math derivation for all steps so far
+  html+=`<div class="slbl">Analiz — Addım ${idx+1}/${steps.length}</div><div class="cx-math">${s.math}</div>`;
+  html+=`<p style="font-size:13.5px;color:var(--muted);padding:0 0 10px">${s.desc}</p>`;
+  if(s.result){
+    html+=`<div class="cx-result"><div class="big">${s.result}</div><div class="sub">${s.rdesc}</div></div>`;
+  }
+  html+='</div>';
+  container.innerHTML=html;
+  if(mergeInfoEl)mergeInfoEl.style.display='none';
+}
+
+// =====================================================================
+// PLAYER
+// =====================================================================
+let curProb=null,steps=[],idx=0,timer=null,curStep=null;
+const $=id=>document.getElementById(id);
+
+function loadProblem(prob){
+  curProb=prob;idx=0;stopPlay();
+  // Build steps
+  if(prob.type==='sort'){steps=({bubble:bubbleSteps,insertion:insertionSteps,selection:selectionSteps,shell:shellSteps,quick:quickSteps,merge:mergeSteps})[prob.algo](prob.data);}
+  else if(prob.type==='graph'){steps=({prim:primSteps,kruskal:kruskalSteps,dijkstra:dijkstraSteps})[prob.algo](prob.edges);}
+  else if(prob.type==='compare'){steps=compareSteps(prob.data,prob.alg1,prob.alg2,prob.metric);}
+  else if(prob.type==='complexity'){steps=CX_STEPS[prob.cx];}
+  // Update definition panel
+  const ai=AINFO[prob.type==='sort'?prob.algo:prob.type==='graph'?prob.algo:prob.type==='compare'?prob.alg1:'complexity'];
+  $('def-title').textContent=ai.name;
+  let defHTML=`<div class="question"><div class="q-az">${prob.q}</div>${prob.qEN?`<div class="q-en">${prob.qEN}</div>`:''}</div>`;
+  defHTML+=`<p class="definition">${ai.def}</p>`;
+  defHTML+=`<div class="badges"><span class="badge t">Zaman: ${ai.t}</span><span class="badge a">Yer: ${ai.sp}</span><span class="badge">Ən yaxşı: ${ai.best}</span></div>`;
+  $('def-body').innerHTML=defHTML;
+  // Code tabs
+  const codeTabs=$('code-tabs');codeTabs.innerHTML='';
+  const codes=ai.code;
+  let activeLang=Object.keys(codes)[0];
+  const renderCode=(lang,hl)=>{
+    const lines=codes[lang].split('\n');
+    $('code-block').innerHTML=lines.map((l,i)=>{
+      const escaped=l.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+      const isActive=hl!==undefined&&hl!==null&&(Array.isArray(hl)?hl.includes(i):hl===i);
+      return `<span class="code-line${isActive?' active-line':''}">${escaped||' '}</span>`;
+    }).join('\n');
+  };
+  Object.keys(codes).forEach((k,i)=>{
+    const btn=document.createElement('button');
+    btn.className='code-tab'+(i===0?' active':'');
+    btn.textContent=k==='py'?'python':k;
+    btn.onclick=()=>{document.querySelectorAll('.code-tab').forEach(b=>b.classList.remove('active'));btn.classList.add('active');activeLang=k;renderCode(k,curStep&&curStep.codeLine);};
+    codeTabs.appendChild(btn);
+  });
+  window._renderCode=renderCode;
+  window._getActiveLang=()=>activeLang;
+  renderCode(activeLang,null);
+  // Titles
+  $('viz-title').textContent=prob.title;
+  $('viz-sub').textContent='';
+  renderStep();
+  updateSidebar(prob.id);
+}
+
+function renderStep(){
+  if(!steps.length)return;
+  const s=steps[idx];
+  curStep=s;
+  if(window._renderCode&&s.codeLine!==undefined)window._renderCode(window._getActiveLang?window._getActiveLang():'py',s.codeLine);
+  const va=$('viz-area');
+  const mi=$('merge-info');
+  mi.style.display='none';
+  if(curProb.type==='sort'){
+    renderBars(va,s);
+    if(s.mergeInfo!==undefined&&s.mergeInfo){mi.style.display='block';mi.textContent=s.mergeInfo;}
+    $('desc-panel').innerHTML=`<span class="step-title">${s.title}</span>${s.desc}`;
+    // State panel for sort
+    let sp='';
+    if(s.ops!==undefined){
+      sp+=`<div class="slbl">Statistika</div>`;
+      sp+=`<div class="srow"><span>Müqayisə</span><span>${s.ops}</span></div>`;
+      if(s.swaps!==undefined)sp+=`<div class="srow"><span>${curProb.algo==='insertion'||curProb.algo==='shell'?'Hərəkət':'Yerdəyişmə'}</span><span>${s.swaps}</span></div>`;
+    }
+    if(s.gap!==undefined&&s.gap!==null)sp+=`<div class="slbl">Cari Gap</div><div class="srow pick"><span>Gap</span><span>${s.gap}</span></div>`;
+    sp+=`<div class="slbl">Massiv vəziyyəti</div><div class="srow"><span>${s.arr?s.arr.join(' · '):''}</span></div>`;
+    $('state-panel').innerHTML=sp;
+  } else if(curProb.type==='graph'){
+    buildGraphSVG(va,curProb.edges,s);
+    $('desc-panel').innerHTML=`<span class="step-title">${s.title}</span>${s.desc}`;
+    $('state-panel').innerHTML=s.panel||'';
+  } else if(curProb.type==='compare'){
+    renderCompare(va,s);
+    const lbl={bubble:'Qabarcıq',insertion:'Yerinəqoyma',selection:'Seçim'};
+    const metric=s.metric==='ops'?'müqayisə':'yerdəyişmə';
+    const v1=s.metric==='ops'?s.s1.ops:s.s1.swaps;
+    const v2=s.metric==='ops'?s.s2.ops:s.s2.swaps;
+    $('desc-panel').innerHTML=`<span class="step-title">Müqayisə mərhələsi</span><b>${lbl[s.alg1]}</b>: ${metric} sayı <b>${v1}</b> · <b>${lbl[s.alg2]}</b>: ${metric} sayı <b>${v2}</b><br><br>${s.s1.title}`;
+    const winner=v1<v2?lbl[s.alg1]:v2<v1?lbl[s.alg2]:'Bərabər';
+    $('state-panel').innerHTML=`<div class="slbl">Cari ${metric} sayı</div><div class="srow ${v1<=v2?'done':''}">${lbl[s.alg1]}<span>${v1}</span></div><div class="srow ${v2<=v1?'done':''}">${lbl[s.alg2]}<span>${v2}</span></div><div class="slbl">Üstünlük</div><div class="srow pick"><span>${winner}</span></div>`;
+  } else if(curProb.type==='complexity'){
+    renderComplexity(va,mi,steps,idx);
+    $('desc-panel').innerHTML=`<span class="step-title">Addım ${idx+1}/${steps.length}</span>${s.desc}`;
+    $('state-panel').innerHTML=`<div class="slbl">Analiz İrəliləyişi</div>${steps.map((st,i)=>`<div class="srow ${i<idx?'done':i===idx?'pick':''}">${i+1}. ${st.title}</div>`).join('')}`;
+  }
+  // Controls
+  $('prog').style.width=(steps.length<=1?100:idx/(steps.length-1)*100)+'%';
+  $('step-ctr').textContent=`${idx+1} / ${steps.length}`;
+  $('btn-prev').disabled=idx===0;
+  $('btn-next').disabled=idx===steps.length-1;
+}
+
+function go(d){idx=Math.max(0,Math.min(steps.length-1,idx+d));renderStep();if(idx===steps.length-1)stopPlay();}
+function stopPlay(){if(timer){clearInterval(timer);timer=null;$('btn-play').textContent='▶ Avtomatik';}}
+
+$('btn-next').onclick=()=>go(1);
+$('btn-prev').onclick=()=>go(-1);
+$('btn-reset').onclick=()=>{idx=0;stopPlay();renderStep();};
+$('btn-play').onclick=()=>{
+  if(timer){stopPlay();}
+  else{if(idx===steps.length-1)idx=0;$('btn-play').textContent='⏸ Dayandır';
+    timer=setInterval(()=>{if(idx>=steps.length-1){stopPlay();}else go(1);},900);}
+};
+document.addEventListener('keydown',e=>{
+  if(e.key==='ArrowRight'||e.key==='.'){e.preventDefault();go(1);}
+  if(e.key==='ArrowLeft'||e.key===','){e.preventDefault();go(-1);}
+  if(e.key===' '){e.preventDefault();$('btn-play').click();}
+});
+
+// =====================================================================
+// SIDEBAR
+// =====================================================================
+const CAT_COLORS={Sıralama:'var(--teal)',Qraf:'var(--amber)',Müqayisə:'var(--blue)',Mürəkkəblik:'var(--purple)'};
+function buildSidebar(){
+  const pl=$('prob-list');
+  const cats=[...new Set(PROBLEMS.map(p=>p.cat))];
+  cats.forEach(cat=>{
+    const div=document.createElement('div');
+    div.innerHTML=`<div class="sb-cat" style="color:${CAT_COLORS[cat]||'var(--muted)'}">${cat}</div>`;
+    PROBLEMS.filter(p=>p.cat===cat).forEach(prob=>{
+      const item=document.createElement('div');
+      item.className='sb-item';item.dataset.id=prob.id;
+      const shortTitle=prob.title.replace(' (Məsələ '+prob.id+')','').replace('Alqoritmi','').replace('Sort','').replace('Sıralama','Sır.').replace('Asimptotik Analiz','Mür.').trim();
+      item.innerHTML=`<div class="sb-num">${prob.id}</div><div class="sb-txt">${shortTitle}</div>`;
+      item.onclick=()=>loadProblem(prob);
+      div.appendChild(item);
+    });
+    pl.appendChild(div);
+  });
+}
+function updateSidebar(id){
+  document.querySelectorAll('.sb-item').forEach(el=>{
+    el.classList.toggle('active',parseInt(el.dataset.id)===id);
+  });
+}
+
+// =====================================================================
+// MOBILE SIDEBAR
+// =====================================================================
+function toggleSidebar(){
+  const sb=document.getElementById('sidebar');
+  const ov=document.getElementById('sidebar-overlay');
+  const open=sb.classList.toggle('open');
+  ov.classList.toggle('open',open);
+}
+// Close sidebar when problem selected on mobile
+document.getElementById('prob-list').addEventListener('click',()=>{
+  if(window.innerWidth<=720){
+    document.getElementById('sidebar').classList.remove('open');
+    document.getElementById('sidebar-overlay').classList.remove('open');
+  }
+});
+
+// =====================================================================
+// INIT
+// =====================================================================
+buildSidebar();
+loadProblem(PROBLEMS[0]);
+</script>
+</body>
+</html>
