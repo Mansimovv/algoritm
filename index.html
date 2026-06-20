@@ -182,6 +182,25 @@ pre.code{background:#0a0e14;padding:10px 0;font-family:var(--mono);font-size:12.
 /* ---- Loru block ---- */
 .loru-block{background:linear-gradient(135deg,#1a2535,#151b24);border:1px solid var(--border);border-left:3px solid var(--amber);border-radius:9px;padding:11px 13px;margin-bottom:10px}
 .loru-text{font-size:13px;color:var(--ink);line-height:1.65;font-style:italic}
+/* ---- Graph 3-way compare ---- */
+.gcmp{background:var(--panel2);border:1px solid var(--border);border-radius:11px;padding:13px 14px;margin-bottom:10px}
+.gcmp-title{font-family:var(--disp);font-size:10px;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:.08em;margin-bottom:10px}
+.gcmp-row{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-bottom:10px}
+@media(max-width:500px){.gcmp-row{grid-template-columns:1fr}}
+.gcmp-card{background:var(--panel);border:1px solid var(--border);border-radius:9px;padding:10px 11px;border-top:2px solid var(--border)}
+.gcmp-card.cur{border-top-color:var(--teal);background:#0f2922}
+.gcmp-card.cur2{border-top-color:var(--teal);background:#0f2922}
+.gcmp-card.dif{border-top-color:var(--amber);background:#1e1608}
+.gcmp-name{font-family:var(--disp);font-size:13px;font-weight:700;color:var(--ink);margin-bottom:4px}
+.gcmp-card.cur .gcmp-name,.gcmp-card.cur2 .gcmp-name{color:var(--teal)}
+.gcmp-card.dif .gcmp-name{color:var(--amber)}
+.gcmp-goal{font-size:11.5px;color:var(--muted);line-height:1.5;margin-bottom:5px}
+.gcmp-how{font-size:11px;color:var(--muted);font-style:italic;border-top:1px solid var(--border);padding-top:5px;margin-top:2px}
+.gcmp-badge{display:inline-block;font-family:var(--disp);font-size:9px;font-weight:700;padding:1px 7px;border-radius:10px;margin-bottom:5px}
+.gcmp-badge.mst{background:rgba(45,212,191,.12);color:var(--teal);border:1px solid rgba(45,212,191,.3)}
+.gcmp-badge.sp{background:rgba(245,166,35,.12);color:var(--amber);border:1px solid rgba(245,166,35,.3)}
+.gcmp-note{font-size:12px;color:var(--muted);line-height:1.55;padding-top:8px;border-top:1px solid var(--border)}
+.gcmp-note b{color:var(--ink)}
 /* ---- Complexity primer ---- */
 .cx-primer{background:linear-gradient(135deg,#0f1e30,#0d1117);border:1px solid var(--border);border-top:2px solid var(--teal);border-radius:12px;padding:14px 15px;margin-bottom:12px}
 .cxp-title{font-family:var(--disp);font-size:13px;font-weight:700;color:var(--teal);margin-bottom:12px;letter-spacing:.03em}
@@ -1342,6 +1361,38 @@ function loadProblem(prob){
     defHTML+=`<div class="loru-block">
       <div class="def-block-label lbl-amber" style="margin-bottom:5px">💬 Sadə İzah / Loru Dil — Uşağa izah edirmiş kimi</div>
       <div class="loru-text">${ai.loru}</div>
+    </div>`;
+  }
+
+  // --- Graph 3-way comparison block ---
+  if(prob.type==='graph'){
+    const cur=prob.algo;
+    const gc=(a,cls,badge,badgeCls,goal,how)=>
+      `<div class="gcmp-card ${cls}">
+        <span class="gcmp-badge ${badgeCls}">${badge}</span>
+        <div class="gcmp-name">${a}</div>
+        <div class="gcmp-goal">${goal}</div>
+        <div class="gcmp-how">${how}</div>
+      </div>`;
+    defHTML+=`<div class="gcmp">
+      <div class="gcmp-title">Bu 3 alqoritm nə fərqlənir?</div>
+      <div class="gcmp-row">
+        ${gc('Prim', cur==='prim'?'cur':'', 'MST', 'mst',
+          'Bütün tepələri <b>ən ucuz kənarla</b> bir-birinə birləşdir (ümumi kabel xərcini azalt)',
+          'Hər addımda soruşur: "Bu tək kənara nə qədər başa gəlir?"')}
+        ${gc('Kruskal', cur==='kruskal'?'cur2':'', 'MST', 'mst',
+          'Bütün tepələri <b>ən ucuz kənarla</b> bir-birinə birləşdir (ümumi kabel xərcini azalt)',
+          'Hər addımda soruşur: "Bu tək kənara nə qədər başa gəlir?"')}
+        ${gc('Deykstra', cur==='dijkstra'?'dif':'', 'Ən qısa yol', 'sp',
+          '<b>A-dan</b> hər tepəyə ümumi məsafəni tap (neçə addım yol getmək lazımdır?)',
+          'Hər addımda soruşur: "A-dan bu tepəyə ümumi cəm nə qədərdir?"')}
+      </div>
+      <div class="gcmp-note">
+        <b>Niyə qarışırlar?</b> Hər ikisi "bir nöqtədən başlayır, ən kiçiyi seçir" — amma <b>nəyi</b> seçdikləri tamam fərqlidir:<br>
+        Prim → <b>o tək kənarın çəkisi</b> minimum olsun (A-dan uzaqlıq önəmsizdir)<br>
+        Deykstra → <b>A-dan ümumi məsafə</b> minimum olsun (tək kənar deyil, cəm yol)<br><br>
+        <b>Bu qrafda C tepəsinə bax:</b> Prim C-ni F-dən birləşdirir (kənar çəki=4, ən ucuz kənar). Deykstra isə A→B→C = 4+5=<b>9</b> tapır — çünki A-dan C-yə ən qısa <em>ümumi yol</em> B üzərindəndir. F-dən getsən A→…→F→C = 4+2+1+4=<b>11</b>, daha uzundur. Eyni qraf, eyni C tepəsi — iki fərqli cavab.
+      </div>
     </div>`;
   }
 
