@@ -161,6 +161,51 @@ pre.code{background:#0a0e14;padding:10px 0;font-family:var(--mono);font-size:12.
 /* ---- Bilingual question ---- */
 .q-az{font-size:13.5px;color:var(--ink);margin-bottom:4px}
 .q-en{font-size:12px;color:var(--muted);font-style:italic}
+/* ---- 2x2 def grid ---- */
+.def-grid4{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:10px}
+@media(max-width:700px){.def-grid4{grid-template-columns:1fr}}
+/* ---- Question block ---- */
+.question-block{background:var(--panel2);border:1px solid var(--border);border-left:3px solid var(--amber);border-radius:9px;padding:10px 13px;margin-bottom:10px}
+.q-label{font-family:var(--disp);font-size:10px;font-weight:700;color:var(--amber);text-transform:uppercase;letter-spacing:.1em;margin-bottom:5px}
+/* ---- Def blocks ---- */
+.def-block{background:var(--panel2);border:1px solid var(--border);border-radius:10px;padding:11px 13px}
+.def-block-label{font-family:var(--disp);font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.08em;margin-bottom:7px;display:block}
+.lbl-teal{color:var(--teal)}
+.lbl-blue{color:var(--blue)}
+.lbl-purple{color:var(--purple)}
+.lbl-amber{color:var(--amber)}
+.def-text{font-size:12.5px;color:var(--muted);line-height:1.6}
+/* ---- How list ---- */
+.how-list{list-style:none;padding:0;margin:0;display:flex;flex-direction:column;gap:5px}
+.how-list li{display:flex;align-items:flex-start;gap:8px;font-size:12.5px;color:var(--muted);line-height:1.45}
+.step-n{min-width:20px;height:20px;border-radius:50%;background:var(--teal);color:#08221f;font-family:var(--mono);font-size:10px;font-weight:700;display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:1px}
+/* ---- Loru block ---- */
+.loru-block{background:linear-gradient(135deg,#1a2535,#151b24);border:1px solid var(--border);border-left:3px solid var(--amber);border-radius:9px;padding:11px 13px;margin-bottom:10px}
+.loru-text{font-size:13px;color:var(--ink);line-height:1.65;font-style:italic}
+/* ---- Complexity primer ---- */
+.cx-primer{background:linear-gradient(135deg,#0f1e30,#0d1117);border:1px solid var(--border);border-top:2px solid var(--teal);border-radius:12px;padding:14px 15px;margin-bottom:12px}
+.cxp-title{font-family:var(--disp);font-size:13px;font-weight:700;color:var(--teal);margin-bottom:12px;letter-spacing:.03em}
+.cxp-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+@media(max-width:640px){.cxp-grid{grid-template-columns:1fr}}
+.cxp-col{}
+.cxp-sub{font-family:var(--disp);font-size:10px;font-weight:700;color:var(--blue);letter-spacing:.1em;text-transform:uppercase;margin-bottom:5px}
+.cxp-text{font-size:12.5px;color:var(--muted);line-height:1.6;margin-bottom:0}
+.cxp-rules{list-style:none;padding:0;margin:0;display:flex;flex-direction:column;gap:4px}
+.cxp-rules li{display:flex;align-items:flex-start;gap:7px;font-size:12px;color:var(--muted);line-height:1.45}
+.cxp-rules code{font-family:var(--mono);font-size:11px;background:rgba(96,165,250,.1);color:var(--blue);padding:1px 5px;border-radius:3px}
+.cxr-num{min-width:18px;height:18px;border-radius:50%;background:var(--blue);color:#0a0e14;font-family:var(--mono);font-size:9px;font-weight:700;display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:1px}
+/* ---- Big-O hierarchy ---- */
+.cx-hier{display:flex;flex-direction:column;gap:3px;margin-top:4px}
+.cxh-row{display:flex;align-items:center;gap:8px;padding:4px 8px;border-radius:6px;border-left:3px solid}
+.cxh-1{background:rgba(45,212,191,.08);border-color:var(--teal)}
+.cxh-2{background:rgba(96,165,250,.08);border-color:var(--blue)}
+.cxh-3{background:rgba(45,212,191,.06);border-color:#2dd4bf99}
+.cxh-4{background:rgba(192,132,252,.08);border-color:var(--purple)}
+.cxh-5{background:rgba(245,166,35,.08);border-color:var(--amber)}
+.cxh-6{background:rgba(240,113,110,.08);border-color:var(--red)}
+.cxh-7{background:rgba(240,113,110,.12);border-color:#c0392b}
+.cxh-o{font-family:var(--mono);font-size:11px;font-weight:700;min-width:82px;flex-shrink:0;color:var(--ink)}
+.cxh-lbl{font-size:11px;color:var(--muted);line-height:1.3}
 /* ---- Mobile hamburger ---- */
 #menu-toggle{display:none;position:fixed;top:12px;left:12px;z-index:200;background:var(--panel);border:1px solid var(--border);border-radius:9px;width:40px;height:40px;align-items:center;justify-content:center;cursor:pointer;flex-direction:column;gap:5px;padding:10px}
 #menu-toggle span{display:block;height:2px;background:var(--ink);border-radius:2px;width:18px;transition:.2s}
@@ -243,6 +288,10 @@ pre.code{background:#0a0e14;padding:10px 0;font-family:var(--mono);font-size:12.
 const AINFO = {
 bubble:{name:'Qabarcıq Sıralama (Bubble Sort)',
   def:'Qonşu elementləri müqayisə edərək böyük olanı sona doğru "qabarcıq kimi" köçürür. Hər keçid (pass) sonunda ən böyük element öz yerinə düşür. Sadə, amma böyük massivilərdə yavaşdır.',
+  how:['i = 0-dan n−2-yə: hər keçid üçün','j = 0-dan n−i−2-yə: qonşu cütlərə bax','arr[j] > arr[j+1] olarsa → arr[j] ilə arr[j+1]-i yerlə dəyiş (swap)','Keçid bitdikdə ən böyük element sona oturur','n−1 keçid sonunda massiv tam sıralanır'],
+  loru:'Düşün ki bir sıra insan yüksəkliklərinə görə düzülmək istəyir. Yanındakına baxır — sağdakı özündən qısa olsa, yer dəyişirlər. Bu proses boylu adamları əvvəldən sona doğru "qabarcıq kimi" sürüşdürür. Hər tur sonunda ən hündür insan arxaya gedir.',
+  niye:'Öyrənmək üçün ən asan sıralama alqoritmidir. Prinsipi başa düşmək digər sıralama alqoritmlərinin əsasını yaradır. Böyük massivlər üçün praktikada istifadə edilmir, amma müqayisə-əsaslı sıralama anlayışını öyrətmək üçün idealdır.',
+  vs:'Insertion Sort ilə: hər ikisi O(n²) amma Insertion demək olar ki sıralanmış massivdə O(n)-ə yaxınlaşır, Bubble isə həmişə n² müqayisə aparır. Selection Sort ilə: Selection az swap edir (n−1), Bubble isə çox swap edə bilər. Üçü də böyük massivlər üçün yavaşdır — praktikada QuickSort/MergeSort seçilir.',
   t:'O(n²)',sp:'O(1)',best:'O(n)',
   code:{py:`def bubble_sort(arr):
     n = len(arr)
@@ -254,6 +303,10 @@ bubble:{name:'Qabarcıq Sıralama (Bubble Sort)',
 
 insertion:{name:'Yerinəqoyma Sıralama (Insertion Sort)',
   def:'Kartları sıraladığınız kimi işləyir. Sıralanmamış hissədən bir element (key) götürür, sıralanmış hissədə onun düzgün yerinə qoyur. Kiçik və demək olar ki sıralanmış massivilərdə çox effektivdir.',
+  how:['İlk element (i=0) sıralanmış hesab edilir','i = 1-dən başlayaraq hər element key kimi götürülür','j = i−1 pointerı sola doğru gedir; arr[j] > key olarsa arr[j+1] = arr[j] (sürüşdür)','j < 0 və ya arr[j] ≤ key olana kimi sürüşdürmə davam edir','arr[j+1] = key: key boşalan yerə yerləşdirilir'],
+  loru:'Kart oynadığınızı düşünün. Əlinizə hər yeni kart gəldikdə onu əlinizdəki sıralanmış kartların içinə düzgün yerə qoyursunuz — böyük kartları bir-bir sağa keçirib yeri açırsınız, sonra kartı yerləşdirirsiniz.',
+  niye:'Kiçik massivlər (n<50) üçün ən effektiv sadə sıralama alqoritmidir. "Demək olar ki sıralanmış" massivlər üçün mükəmməldir: O(n)-ə yaxınlaşır. Həm də "online" sıralama üçün idealdır — elementlər gəldikcə massivi sıralanmış saxlaya bilər.',
+  vs:'Bubble ilə: hər ikisi O(n²) amma Insertion çox az köçürmə edir (shift), Bubble isə daima swap — praktikada Insertion daha sürətlidir. Selection ilə: Selection həmişə n−1 swap edir, Insertion isə kiçik/sıralanmış massivlər üçün minimum iş görür. Bubble vs Insertion vs Selection: üçü də O(n²) — Insertion real dünyada ən sürətlisidir.',
   t:'O(n²)',sp:'O(1)',best:'O(n)',
   code:{py:`def insertion_sort(arr):
     for i in range(1, len(arr)):
@@ -267,6 +320,10 @@ insertion:{name:'Yerinəqoyma Sıralama (Insertion Sort)',
 
 selection:{name:'Seçim Sıralama (Selection Sort)',
   def:'Hər addımda sıralanmamış hissənin minimumunu tapır və onu sıralanmamış hissənin əvvəlinə yerləşdirir. Yerdəyişmə sayı minimumdur (n-1), amma müqayisə sayı həmişə O(n²)-dir.',
+  how:['i = 0-dan n−2-yə: hər keçid üçün','min_idx = i (bu keçidin müvəqqəti minimum indeksi)','j = i+1-dən n−1-ə: arr[j] < arr[min_idx] olarsa min_idx = j','Keçid bitdikdə arr[i] ilə arr[min_idx]-i yerlə dəyiş','Sıralanmış hissə bir element artır (sol tərəf)'],
+  loru:'Qabda qarışıq düymələr var. Hər dəfə hamısına baxıb ən kiçiyi tapırsan, onu götürüb sıranın əvvəlinə qoyursan. Bunu n dəfə etdikdən sonra hamısı sıralanır. Üstünlüyü: çox az yer dəyişdirir.',
+  niye:'Yerdəyişmə sayı sabit n−1 olduğundan yaddaşa yazmaq bahaya başa gəldikdə (məs., flash yaddaş, EEPROM) faydalıdır. Sadə implementasiya tələb edir. Amma stabil deyil: bərabər elementlərin sırası dəyişə bilər.',
+  vs:'Bubble ilə: Selection az swap edir (n−1), Bubble isə O(n²) swap edə bilər. Insertion ilə: Insertion kiçik/sıralanmış massivlər üçün daha sürətlidir. Üçü arasında Selection ən az swap edir, lakin müqayisə sayı həmişə O(n²) — heç vaxt daha yaxşı olmur.',
   t:'O(n²)',sp:'O(1)',best:'O(n²)',
   code:{py:`def selection_sort(arr):
     n = len(arr)
@@ -280,6 +337,10 @@ selection:{name:'Seçim Sıralama (Selection Sort)',
 
 shell:{name:'Şell Sıralama (Shell Sort)',
   def:'Insertion Sort-un təkmilləşdirilmiş versiyasıdır. Uzaq məsafəli elementləri müqayisə edərək başlayır (gap = n/2), sonra gap azaldıqca adi Insertion Sort-a çevrilir. Orta ölçülü massivilərdə çox sürətlidir.',
+  how:['gap = n//2 ilə başla','gap > 0 olduğu müddət: gap-aralı Insertion Sort tətbiq et','i = gap-dən n−1-ə: temp = arr[i] götür, gap məsafəli sol elementlərlə müqayisə et','arr[j−gap] > temp olarsa → arr[j] = arr[j−gap] (sürüşdür), j −= gap','arr[j] = temp yerləşdir. Sonra gap //= 2 et'],
+  loru:'Uzun bir sıranı sıralamaq lazımdır. Əvvəlcə çox uzaq duranları (gap böyük) müqayisə edirsən — belə böyük qatlama baş verir. Sonra getdikcə yaxınlaşan cütləri müqayisə edirsən. Ən sonda qonşuları. Nəticədə Insertion Sort-dan çox daha sürətli işləyir.',
+  niye:'Insertion Sort-dan əhəmiyyətli dərəcədə daha sürətlidir, eyni zamanda əlavə yaddaş tələb etmir (in-place, O(1)). Orta ölçülü massivlər (n ~ 1000-10000) üçün praktik seçimdir. Mürəkkəb kitabxana asılılığı olmayan sistemlər üçün uygundur.',
+  vs:'Insertion Sort-un birbaşa genişləndirilməsidir — gap=1 olduqda tam adi Insertion Sort-a çevrilir. QuickSort/MergeSort ilə: Shell daha sadə implementasiyaya malikdir amma O(n log²n) ilə onlardan yavaşdır. Üstünlüyü: QuickSort kimi ən pis hal problemi yoxdur (pivot seçimi problemi).',
   t:'O(n log²n)',sp:'O(1)',best:'O(n log n)',
   code:{py:`def shell_sort(arr):
     n = len(arr)
@@ -297,6 +358,10 @@ shell:{name:'Şell Sıralama (Shell Sort)',
 
 quick:{name:'Sürətli Sıralama (QuickSort)',
   def:'"Parçala və idarə et" (Divide & Conquer) prinsipinə əsaslanır. Pivot seçilir, massiv pivotdan kiçik/böyük olanlara bölünür (partition), hər hissə rekursiv sıralanır. Orta halda O(n log n) ən sürətli sıralama alqoritmlərindən biridir.',
+  how:['Əgər low ≥ high ise dur (baza halı)','Partition: son element pivot seçilir (arr[high])','i = low−1; j = low-dan high−1-ə: arr[j] ≤ pivot olarsa i++ və arr[i]↔arr[j] swap','Son olaraq arr[i+1]↔arr[high]: pivot öz yerinə oturur, p = i+1','Rekursiv: quicksort(arr, low, p−1) və quicksort(arr, p+1, high)'],
+  loru:'Sinif rəhbəri deyir: "Məndən qısa olanlar sola, uzun olanlar sağa keçin!" — bu "pivot" özüdür. Sonra hər qrup üçün öz aralarında eyni qaydanı tətbiq edir. Getdikcə qruplar kiçilir, axırda hamı sıralanır.',
+  niye:'Orta halda O(n log n) ilə ən sürətli praktik sıralama alqoritmidir. Cache-dostu (cache-friendly), in-place — əlavə yaddaş tələb etmir. Python, Java, C++ standart kitabxanalarında (müxtəlif variasiyalarda) istifadə edilir.',
+  vs:'Merge Sort ilə: hər ikisi O(n log n) orta. QuickSort in-place (O(log n) stack), Merge O(n) əlavə yaddaş. Ən pis hal: QuickSort O(n²) (sıralanmış + kötü pivot), Merge həmişə O(n log n). Stabil: Merge Sort ✓, QuickSort ✗. Shell Sort ilə: QuickSort daha sürətlidir amma pivot seçimi vacibdir.',
   t:'O(n log n)',sp:'O(log n)',best:'O(n log n)',
   code:{py:`def quicksort(arr, low=0, high=None):
     if high is None:
@@ -318,6 +383,10 @@ def partition(arr, low, high):
 
 merge:{name:'Birləşdirmə Sıralama (Merge Sort)',
   def:'Massivi yarıya bölür, hər yarını rekursiv sıralayır, sonra iki sıralanmış yarını birləşdirir. Həmişə O(n log n) vaxt tələb edir — stabil sıralamadır. Əlavə O(n) yaddaş lazımdır.',
+  how:['Əgər massiv 1 elementdirsə, sıralanmış say (baza halı)','mid = len//2: massivi sol [0..mid] və sağ [mid..n] hissəyə böl','Hər hissəni rekursiv sırala: merge_sort(left), merge_sort(right)','merge(left, right): i,j göstəriciləri ilə kiçik olanı nəticəyə əlavə et','Qalan elementlər nəticəyə əlavə edilir; sıralanmış massiv qaytarılır'],
+  loru:'Bir kitabxanada kitablar qarışıqdır. Kitabxanaçı onları iki yerə bölüb iki köməkçiyə verir. Hər köməkçi öz payını eyni üsulla sıralayır (rekursiv). Sonra hər ikisi öz sıralanmış yığınından növbəylə ən kiçiyi götürüb birləşdirir.',
+  niye:'Həmişə O(n log n) olduğundan (worst case yoxdur) böyük, qeyri-müəyyən massivlər üçün etibarlı seçimdir. Stabil sıralama — bərabər elementlərin sırası saxlanılır. Əlaqəli siyahılar (linked list) üçün mükəmməldir (əlavə yaddaş lazım deyil).',
+  vs:'QuickSort ilə: MergeSort həmişə O(n log n), QuickSort ən pis O(n²). Amma QuickSort in-place, Merge O(n) əlavə yaddaş. HeapSort ilə: ikisi də O(n log n) worst case, Merge stabil ✓ HeapSort ✗. Praktikada QuickSort çox vaxt daha sürətlidir (cache effekti). TimSort (Python-un sort()-u) MergeSort əsasındadır.',
   t:'O(n log n)',sp:'O(n)',best:'O(n log n)',
   code:{py:`def merge_sort(arr):
     if len(arr) <= 1:
@@ -338,6 +407,10 @@ def merge(left, right):
 
 prim:{name:'Prim Alqoritmi — Minimal Örtən Ağac (MST)',
   def:'Bir başlanğıc təpəsindən başlayaraq MST qurur. Hər addımda ağacdakı təpələrdən çölə çıxan ən kiçik çəkili kənar seçilir. Prioritet növbə (min-heap) istifadə edilir. Sıx qraflarda Kruskal-dan daha effektivdir.',
+  how:['Başlanğıc təpəsini (1) visited et, ondan çıxan kənarları heap-ə əlavə et','heap-dən ən kiçik çəkili kənar (w, u, v) götür','Əgər v artıq visited-dirsə, at (keç)','Deyilsə: visited[v] = True, kənar MST-ə əlavə olunur','v-dən çıxan ziyarətsiz kənarlar heap-ə əlavə edilir. Bütün V ziyarət olana kimi davam et'],
+  loru:'Bir əyalətdə şəhərlər var, onlar arasında elektrik xətti çəkmək lazımdır. Ən ucuz xətdən başlayırsan. Hər addımda şəbəkəyə qoşulmuş şəhərlərdən kənara çıxan ən ucuz xətti seçib yeni şəhər əlavə edirsən. Bütün şəhərlər birləşənə kimi davam edir.',
+  niye:'Sıx qraflarda (E ≈ V², yəni demək olar ki hər cüt tepə bağlıdır) Kruskal-dan daha effektivdir. Bir nöqtədən genişləndiyi üçün prosesi vizuallaşdırmaq asandır. Coğrafi şəbəkə dizaynında, elektrik şəbəkəsi planlamasında istifadə olunur.',
+  vs:'Kruskal ilə: HƏR İKİSİ eyni MST-i tapır (nəticə eynidir!). Prim bir tepedən başlayıb genişlənir → sıx qraflar üçün yaxşı. Kruskal bütün kənarları qlobal sıralayıb seçir → seyrək qraflar üçün yaxşı. Prim: visited[] massivi; Kruskal: Union-Find. Dijkstra ilə oxşarlıq: kod strukturu demək olar ki eynidir, amma məqsəd fərqlidir — Prim MST tapır, Dijkstra ən qısa YOL tapır.',
   t:'O(E log V)',sp:'O(V+E)',best:'O(E log V)',
   code:{py:`import heapq
 
@@ -361,6 +434,10 @@ def prim(graph, start=0):
 
 kruskal:{name:'Kruskal Alqoritmi — Minimal Örtən Ağac (MST)',
   def:'Bütün kənarları çəkiyə görə artan sıraya düzür, sonra hər birini nəzərdən keçirir: dövrə yaratmırsa qəbul edir (Union-Find ilə yoxlayır). Seyrək qraflarda Prim-dən daha effektivdir.',
+  how:['Bütün kənarları çəkiyə görə artan sıraya düz','Hər kənar üçün Union-Find ilə ru = find(u), rv = find(v) tap','ru == rv olarsa: u və v eyni komponentdədir — kənar dövrə yaradır → rədd et','ru ≠ rv olarsa: kənar MST-ə əlavə et, parent[ru] = rv (birləşdir)','V−1 kənar seçiləndə MST hazırdır'],
+  loru:'Şəhərlər arasındakı bütün yolların siyahısını ucuzdan bahaya sıralayırsan. Ən ucuzdan başlayırsan. Əgər yol iki şəhəri birləşdirir amma onlar artıq başqa yollarla birbirinə bağlıdırsa (dövrə yaranır) — o yolu atırsan. Yoxsa qəbul edirsən.',
+  niye:'Seyrək qraflarda (E ≪ V²) Prim-dən daha effektivdir. Union-Find dövrəni O(α(V)) — praktikada sabit vaxtda — yoxlayır. Coğrafi xəritə, kabel şəbəkəsi, boru kəmərləri planlamasında istifadə edilir.',
+  vs:'Prim ilə: HƏR İKİSİ eyni MST-i tapır (fərqli alqoritm, eyni cavab!). Kruskal qlobal kənar sıralaması → seyrək qraflar üçün O(E log E). Prim tepə-tepə genişlənmə → sıx qraflar üçün O(E log V). Kruskal: Union-Find; Prim: min-heap. Xülasə: "Kənarlar" alqoritmi (Kruskal) vs "Tepelər" alqoritmi (Prim).',
   t:'O(E log E)',sp:'O(V)',best:'O(E log E)',
   code:{py:`def find(parent, x):       # Union-Find: kök tap
     while parent[x] != x:
@@ -380,6 +457,10 @@ def kruskal(vertices, edges):  # edges: (w, u, v)
 
 dijkstra:{name:'Deykstra Alqoritmi — Ən Qısa Yol',
   def:'Bir mənbə təpəsindən bütün digər təpələrə olan ən qısa yolları tapır. Hər addımda sıralanmamış təpələr arasından ən qısa məsafəlisi seçilir (greedy), onun qonşuları üçün məsafələr yenilənir (relaxation). Mənfi çəkilərlə işləmir.',
+  how:['dist[source]=0, bütün digər dist[v]=∞; heap-ə (0, source) əlavə et','heap-dən ən kiçik (d, u) götür; d > dist[u] olarsa keç (köhnə giriş)','u-nun hər qonşusu v üçün: dist[u]+w < dist[v] olarsa → dist[v] = dist[u]+w (relaxation)','Yenilənmiş v-ni heap-ə əlavə et: heappush(heap, (dist[v], v))','Bütün tepeler yekunlaşana kimi davam et; dist[] bütün ən qısa yolları saxlayır'],
+  loru:'GPS naviqasiyası kimi işləyir. Başlanğıc nöqtəndən yola çıxırsan, dist[sən]=0, qalanlar ∞. Hər yol ayrıcında ən yaxın tanınan şəhəri seçirsən. O şəhər üzərindən qonşularına daha qısa yol tapılırsa, onların məsafəsini yeniləyirsən.',
+  niye:'GPS naviqasiyası, internet marşrutlaması (OSPF protokolu), oyunlarda AI path-finding, aviasiya çizelgesi üçün istifadə olunur. Mənfi çəkili kənar olmadıqda ən effektiv ən qısa yol alqoritmidir.',
+  vs:'Prim ilə oxşarlıq: hər ikisi min-heap + greedy. AMMA fərq: Prim MST tapır (minimum ağac), Dijkstra ən qısa YOL tapır. BFS ilə: BFS bütün kənarları çəki=1 sayır (çəkisiz qraf üçün), Dijkstra çəkiləri nəzərə alır. Bellman-Ford ilə: B-F mənfi çəkilərlə işləyir amma O(VE) — daha yavaş. Floyd-Warshall: bütün cütlər arası ən qısa yollar O(V³).',
   t:'O(E log V)',sp:'O(V)',best:'O(E log V)',
   code:{py:`import heapq
 
@@ -398,6 +479,10 @@ def dijkstra(graph, source):
 
 complexity:{name:'Asimptotik Mürəkkəblik Analizi (Big-O)',
   def:'Proqramın icrası zamanı əməliyyatların sayını n-nin funksiyası kimi ifadə edirik. Big-O notasiyası yalnız ən sürətli artan termini saxlayır, sabit çarpanları atır. O(1)<O(log n)<O(n)<O(n log n)<O(n²)<O(n³)<O(2ⁿ)',
+  how:['Dövr sayını say: sadə dövr → O(n), iç-içə iki dövr → O(n²)','Yarıya bölünmə (while i/=2) → O(log n)','n * log n: xarici log n dövr × daxili n dövr → O(n log n)','Sabit çarpanlar atılır: 2n² + n → O(n²)','Cəmləmədə ən böyük term saxlanılır: n³ + n² → O(n³)'],
+  loru:'Nə qədər əməliyyat aparırıq? Big-O bunu n-in funksiyası kimi söyləyir. Bir dövr n dəfə işləyirsə → O(n). İç-içə iki dövr → hər addım n dəfə × n dəfə = n² → O(n²). Hər dəfə n yarıya bölünürsə → log n addım → O(log n).',
+  niye:'Alqoritmin "nə qədər sürətli" olduğunu müqayisə etmək üçün lazımdır. n=10-da hər şey sürətlidir. n=1.000.000-da O(n²) vs O(n log n) fərqi milyardlarla əməliyyat deməkdir. Müxtəlif kompüterdə, müxtəlif dillərdə müqayisə etmək üçün vahid bir ölçü verir.',
+  vs:'Big-O (üst hədd): ən pis halda neçə əməliyyat. Ω (aşağı hədd): ən yaxşı hal. Θ (sıx hədd): həm üst həm aşağı. Praktikada Big-O istifadə edirik. Sabit çarpanlar atılır (hardware asılıdır). Dominant term saxlanılır: 3n²+5n+100 → O(n²).',
   t:'—',sp:'—',best:'—',
   code:{py:`# Big-O xülasəsi
 O(1)       — sabit: dəyişmir
@@ -1179,9 +1264,96 @@ function loadProblem(prob){
   // Update definition panel
   const ai=AINFO[prob.type==='sort'?prob.algo:prob.type==='graph'?prob.algo:prob.type==='compare'?prob.alg1:'complexity'];
   $('def-title').textContent=ai.name;
-  let defHTML=`<div class="question"><div class="q-az">${prob.q}</div>${prob.qEN?`<div class="q-en">${prob.qEN}</div>`:''}</div>`;
-  defHTML+=`<p class="definition">${ai.def}</p>`;
-  defHTML+=`<div class="badges"><span class="badge t">Zaman: ${ai.t}</span><span class="badge a">Yer: ${ai.sp}</span><span class="badge">Ən yaxşı: ${ai.best}</span></div>`;
+  // --- Question block ---
+  let defHTML=`<div class="question-block">
+    <div class="q-label">Sual / Question</div>
+    <div class="q-az">${prob.q}</div>
+    ${prob.qEN?`<div class="q-en">${prob.qEN}</div>`:''}
+  </div>`;
+
+  // --- Complexity type: show Big-O primer first ---
+  if(prob.type==='complexity'){
+    defHTML+=`<div class="cx-primer">
+      <div class="cxp-title">📐 Asimptotik Analiz Nədir? / What is Big-O?</div>
+      <div class="cxp-grid">
+        <div class="cxp-col">
+          <div class="cxp-sub">Nədir?</div>
+          <p class="cxp-text">Alqoritmin neçə əməliyyat aparacağını giriş ölçüsü <b>n</b> ilə ifadə edirik. Sabit çarpanlar atılır, dominant hədd saxlanılır.<br>Məs.: T(n) = 3n² + 5n + 2 → <b style="color:var(--teal)">O(n²)</b></p>
+          <div class="cxp-sub" style="margin-top:10px">Niyə lazımdır?</div>
+          <p class="cxp-text">n=10-da hər şey sürətlidir. n=1.000.000-da O(n²) vs O(n log n) fərqi <b>milyardlarla əməliyyat</b> deməkdir. Fərqli kompüterlərdə müqayisə üçün vahid ölçü verir.</p>
+          <div class="cxp-sub" style="margin-top:10px">Əsas Qaydalar</div>
+          <ul class="cxp-rules">
+            <li><span class="cxr-num">1</span> Sabit çarpanlar atılır: <code>5n → O(n)</code></li>
+            <li><span class="cxr-num">2</span> Kiçik həddlər atılır: <code>n²+n → O(n²)</code></li>
+            <li><span class="cxr-num">3</span> Sadə dövr: <code>for i=1 to n → O(n)</code></li>
+            <li><span class="cxr-num">4</span> İç-içə iki dövr: <code>O(n) × O(n) = O(n²)</code></li>
+            <li><span class="cxr-num">5</span> Hər dəfə yarıya: <code>n→n/2→...→1 = O(log n)</code></li>
+          </ul>
+        </div>
+        <div class="cxp-col">
+          <div class="cxp-sub">Mürəkkəblik Sıralaması (kiçikdən böyüyə)</div>
+          <div class="cx-hier">
+            <div class="cxh-row cxh-1"><span class="cxh-o">O(1)</span><span class="cxh-lbl">Sabit — nümunə: massivə indekslə çatmaq</span></div>
+            <div class="cxh-row cxh-2"><span class="cxh-o">O(log n)</span><span class="cxh-lbl">Loqarifmik — nümunə: ikili axtarış, hər dəfə yarıya bölünür</span></div>
+            <div class="cxh-row cxh-3"><span class="cxh-o">O(n)</span><span class="cxh-lbl">Xətti — nümunə: massivi bir dəfə keçmək</span></div>
+            <div class="cxh-row cxh-4"><span class="cxh-o">O(n log n)</span><span class="cxh-lbl">Lox-xətti — nümunə: Merge Sort, QuickSort (orta)</span></div>
+            <div class="cxh-row cxh-5"><span class="cxh-o">O(n²)</span><span class="cxh-lbl">Kvadratik — nümunə: Bubble, Insertion, Selection Sort</span></div>
+            <div class="cxh-row cxh-6"><span class="cxh-o">O(n³)</span><span class="cxh-lbl">Kubik — nümunə: üç iç-içə dövr</span></div>
+            <div class="cxh-row cxh-7"><span class="cxh-o">O(2ⁿ)</span><span class="cxh-lbl">Eksponensial — nümunə: bütün alt çoxluqlar</span></div>
+          </div>
+        </div>
+      </div>
+    </div>`;
+  }
+
+  // --- 2x2 grid: Tərif, Necə işləyir, Niyə, Müqayisə ---
+  defHTML+=`<div class="def-grid4">`;
+
+  defHTML+=`<div class="def-block">
+    <div class="def-block-label lbl-teal">📖 Tərif / Definition</div>
+    <div class="def-text">${ai.def}</div>
+  </div>`;
+
+  if(ai.how&&ai.how.length){
+    defHTML+=`<div class="def-block">
+      <div class="def-block-label lbl-blue">⚙️ Necə İşləyir / How It Works</div>
+      <ol class="how-list">${ai.how.map((s,i)=>`<li><span class="step-n">${i+1}</span><span>${s}</span></li>`).join('')}</ol>
+    </div>`;
+  }
+
+  if(ai.niye){
+    defHTML+=`<div class="def-block">
+      <div class="def-block-label lbl-purple">💡 Niyə İstifadə Edirik? / Why Use It?</div>
+      <div class="def-text">${ai.niye}</div>
+    </div>`;
+  }
+
+  if(ai.vs){
+    defHTML+=`<div class="def-block">
+      <div class="def-block-label lbl-amber">⚖️ Müqayisə / Compare with Similar</div>
+      <div class="def-text">${ai.vs}</div>
+    </div>`;
+  }
+
+  defHTML+=`</div>`;
+
+  // --- Loru dil (full width) ---
+  if(ai.loru){
+    defHTML+=`<div class="loru-block">
+      <div class="def-block-label lbl-amber" style="margin-bottom:5px">💬 Sadə İzah / Loru Dil — Uşağa izah edirmiş kimi</div>
+      <div class="loru-text">${ai.loru}</div>
+    </div>`;
+  }
+
+  // --- Complexity badges ---
+  if(ai.t!=='—'){
+    defHTML+=`<div class="badges">
+      <span class="badge t">⏱ Zaman / Time: ${ai.t}</span>
+      <span class="badge a">💾 Yer / Space: ${ai.sp}</span>
+      <span class="badge">✨ Best case: ${ai.best}</span>
+    </div>`;
+  }
+
   $('def-body').innerHTML=defHTML;
   // Code tabs
   const codeTabs=$('code-tabs');codeTabs.innerHTML='';
